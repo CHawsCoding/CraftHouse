@@ -20,6 +20,7 @@ const diySchema = new Schema(
       type: String,
       required: true,
     },
+    images: [String],
     user: {
       type: Schema.Types.ObjectId,
       ref: 'User', 
