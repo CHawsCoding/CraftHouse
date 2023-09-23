@@ -33,14 +33,13 @@ const resolvers = {
         },
     },
 Mutation: {
-    // create a user, sign a token, and send it back (to client/src/components/SignUpForm.js)
-    addUser: async (parent, args) => {
-        const user = await User.create(args);
+    // create a user, sign a token
+    addUser: async (parent, { username, email, password }) => {
+        const user = await User.create({ username, email, password });
         const token = signToken(user);
-
         return { token, user };
-    },
-    // login a user, sign a token, and send it back (to client/src/components/LoginForm.js)
+      },
+    // login a user, sign a token
     login: async (parent, { email, password }) => {
         const user = await User.findOne({ email });
   
