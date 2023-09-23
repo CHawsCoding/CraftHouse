@@ -12,7 +12,7 @@ type Query {
 type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addDIY(title: String!, description: String!, materialsUsed: [String], instructions: String!): DIY
+    addDIY(title: String!, description: String!, materialsUsed: [String], instructions: String!, images: [String] ): DIY
     addComment(content: String!): Comment
     saveDIY(DIYId: ID!): User
     removeDIY(DIYId: ID!): User
@@ -33,6 +33,7 @@ type DIY {
     description: String
     materialsUsed: [String]
     instructions: String
+    images: [String]
     user: User
     comments: [Comment]
 }
