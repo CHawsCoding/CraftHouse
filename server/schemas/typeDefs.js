@@ -19,6 +19,11 @@ type Mutation {
     removeComment(commentId: ID!): DIY
 }
 
+type Auth {
+    token: String
+    user: User
+}
+
 type User {
     _id: ID
     username: String
@@ -43,11 +48,6 @@ type Comment {
     content: String
     user: User
     DIY: DIY
-}
-
-type Auth {
-    token: ID!
-    user: User
 }
 
 `;
