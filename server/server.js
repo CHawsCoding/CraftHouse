@@ -17,13 +17,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 //serve up static assets
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/build')));
-  }
+app.use(express.static(path.join(__dirname, '../client/build')));
 
- app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'));
-  }); 
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+  });
+  
 
 const server = new ApolloServer({
     typeDefs,
@@ -47,5 +46,5 @@ app.listen(PORT, () => {
     });
 
 db.once('open', () => {
-  console.log('Connected to MongoDB!');
+  console.log('Successfull!');
 });
