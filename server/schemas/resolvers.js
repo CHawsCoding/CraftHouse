@@ -39,6 +39,26 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
+
+        // login a user, sign a token
+        login: async (parent, { email, password }) => {
+            const user = await User.findOne({ email });
+
+            if (!user) {
+                throw new AuthenticationError('No user found with this email address');
+            }
+
+            const correctPw = await user.isCorrectPassword(password);
+
+            if (!correctPw) {
+                throw new AuthenticationError('Incorrect credentials');
+            }
+
+            const token = signToken(user);
+
+            return { token, user };
+        },
+        
         addDIY: async (parent, args, context) => {
             if (context.user) {
                 const { title, description, materialsUsed, instructions, images } = args;
@@ -87,25 +107,7 @@ const resolvers = {
 
             throw new AuthenticationError('You need to be logged in!');
         },
-        
-        // login a user, sign a token
-        login: async (parent, { email, password }) => {
-            const user = await User.findOne({ email });
-
-            if (!user) {
-                throw new AuthenticationError('No user found with this email address');
-            }
-
-            const correctPw = await user.isCorrectPassword(password);
-
-            if (!correctPw) {
-                throw new AuthenticationError('Incorrect credentials');
-            }
-
-            const token = signToken(user);
-
-            return { token, user };
-        },
+    
         saveDIY: async (parent, { DIYId }, context) => {
             if (context.user) {
                 const updatedUser = await User.findOneAndUpdate(
