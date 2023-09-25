@@ -59,7 +59,7 @@ function Login() {
             onChange={handleInputChange}
             value={formState.email}
             required
-            className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500"
+            className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500"
           />
         </div>
         <div className="mb-4">
@@ -74,7 +74,7 @@ function Login() {
             onChange={handleInputChange}
             value={formState.password}
             required
-            className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500"
+            className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500"
           />
         </div>
         <button
