@@ -5,7 +5,7 @@ type Query {
     me: User
     users: [User]
     DIYs: [DIY]
-    DIY(_id: ID!): DIY
+    allDIYs: [DIY]
     comment(_id: ID!): Comment
 }
 
@@ -20,7 +20,7 @@ type Mutation {
 }
 
 type Auth {
-    token: String
+    token: ID!
     user: User
 }
 
