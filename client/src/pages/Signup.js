@@ -45,7 +45,7 @@ function Signup() {
             id="username"
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500"
+            className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500"
           />
         </div>
         <div className="mb-4">
@@ -58,7 +58,7 @@ function Signup() {
             id="email"
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500"
+            className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500"
           />
         </div>
         <div className="mb-4">
@@ -71,7 +71,7 @@ function Signup() {
             id="password"
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500"
+            className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500"
           />
         </div>
         <button
