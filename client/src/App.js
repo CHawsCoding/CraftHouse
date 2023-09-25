@@ -6,6 +6,8 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Profile from './pages/Profile';
+import Create from './pages/Create';
+import Explore from './pages/Explore';
 
 import Footer from './components/Footer';
 import SearchBar from './components/searchBar';
@@ -45,6 +47,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/Create" element={ <Create /> } />
+            <Route path="/explore" element={<Explore />} />
           </Routes>
           <Footer />
         </div>
