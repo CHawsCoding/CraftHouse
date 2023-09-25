@@ -1,27 +1,24 @@
-const { Schema, model } = require('mongoose');
+const mongoose = require('mongoose');
 
-const commentSchema = new Schema(
+const commentSchema = new mongoose.Schema(
   {
     content: {
       type: String,
-      required: true,
     },
     user: {
-      type: Schema.Types.ObjectId,
-      ref: 'User', // Reference to the User model
-      required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
     },
-    diyMaterial: {
-      type: Schema.Types.ObjectId,
-      ref: 'DIY', // Reference to the DIY model
-      required: true,
+    DIY: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'DIY',
     },
   },
   {
-    timestamps: true, // Automatically add createdAt and updatedAt fields
+    timestamps: true,
   }
 );
 
-const Comment = model('Comment', commentSchema);
+const Comment = mongoose.model('Comment', commentSchema);
 
 module.exports = Comment;

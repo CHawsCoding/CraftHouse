@@ -25,31 +25,34 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_DIY = gql`
-    mutation addDIY(
-        $title: String!, 
-        $description: String!, 
-        $materialsUsed: [String], 
-        $instructions: String!, 
-        $images: [String]) {
-        addDIY(
-            title: $title, 
-            description: $description, 
-            materialsUsed: $materialsUsed, 
-            instructions: $instructions, 
-            images: $images) {
-            _id
-            title
-            description
-            materialsUsed
-            instructions
-            images
-            user {
-                _id
-                username
-            }
-        }
+  mutation addDIY(
+    $title: String!
+    $description: String!
+    $materialsUsed: [String]
+    $instructions: String!
+    $images: [String]) 
+    {
+    addDIY(
+      title: $title
+      description: $description
+      materialsUsed: $materialsUsed
+      instructions: $instructions
+      images: $images
+    ) {
+      _id
+      title
+      description
+      materialsUsed
+      instructions
+      images
+      user {
+        _id
+        username
+      }
     }
+  }
 `;
+
 
 export const ADD_COMMENT = gql`
 
