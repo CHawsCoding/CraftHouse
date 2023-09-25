@@ -5,7 +5,7 @@ type Query {
     me: User
     users: [User]
     DIYs: [DIY]
-    DIY(_id: ID!): DIY
+    allDIYs: [DIY]
     comment(_id: ID!): Comment
 }
 
@@ -17,6 +17,11 @@ type Mutation {
     saveDIY(DIYId: ID!): User
     removeDIY(DIYId: ID!): User
     removeComment(commentId: ID!): DIY
+}
+
+type Auth {
+    token: ID!
+    user: User
 }
 
 type User {
@@ -43,11 +48,6 @@ type Comment {
     content: String
     user: User
     DIY: DIY
-}
-
-type Auth {
-    token: ID!
-    user: User
 }
 
 `;

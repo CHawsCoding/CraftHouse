@@ -4,7 +4,8 @@ import decode from 'jwt-decode';
 class AuthService {
   // get user data
   getProfile() {
-    return decode(this.getToken());
+    const token = this.getToken();
+    return token ? decode(token) : {};
   }
 
   // check if user's logged in
@@ -25,7 +26,8 @@ class AuthService {
   }
 
   getToken() {
-    return localStorage.getItem('id_token');// Retrieves the user token from localStorage
+    // Retrieves the user token from localStorage
+    return localStorage.getItem('id_token');
   }
 
   login(idToken) {
@@ -35,8 +37,10 @@ class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('id_token'); // clear token from storage
-    window.location.reload(); //reload the page to force login
+    // Clear user token and profile data from localStorage
+    localStorage.removeItem('id_token');
+    // this will reload the page and reset the state of the application
+    window.location.reload();
   }
 }
 

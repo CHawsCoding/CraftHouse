@@ -1,6 +1,6 @@
-const { Schema, model } = require('mongoose');
+const mongoose = require('mongoose');
 
-const diySchema = new Schema(
+const diySchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -22,22 +22,22 @@ const diySchema = new Schema(
     },
     images: [String],
     user: {
-      type: Schema.Types.ObjectId,
-      ref: 'User', 
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
       required: true,
     },
     comments: [
       {
-        type: Schema.Types.ObjectId,
-        ref: 'Comment', 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment',
       },
     ],
   },
   {
-    timestamps: true, 
+    timestamps: true,
   }
 );
 
-const DIY = model('DIY', diySchema);
+const DIY = mongoose.model('DIY', diySchema);
 
 module.exports = DIY;
