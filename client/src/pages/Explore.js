@@ -2,6 +2,10 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_DIYS } from '../utils/queries';
 
+import { BiSolidLike } from 'react-icons/bi';
+import { BiSolidDislike } from 'react-icons/bi';
+import { FaRegComment } from 'react-icons/fa';
+
 function Explore() {
   // Use the useQuery hook to fetch data
   const { loading, error, data } = useQuery(GET_ALL_DIYS);
@@ -28,6 +32,27 @@ function Explore() {
               <h3 className="text-xl font-semibold mb-2">{DIY.title}</h3>
               <p className="text-gray-700">{DIY.description}</p>
             </div>
+            <div className="flex justify-between px-6 py-4 bg-gray-100 border-t border-gray-200">
+              <BiSolidLike className=" text-pink-600 hover:scale-125" />
+              <BiSolidDislike className=" text-pink-600 hover:scale-125" />
+              
+              {/* <span className="text-gray-700"> {DIY.likes.length}</span> */}
+            </div>
+            <div className='relative'>
+              <form className='commentForm'>
+                <input
+                  type='text'
+                  placeholder='Add a comment...'
+                  className='text-black p-2 w-full'
+                />
+                <>
+                <butoon
+                  type='submit'
+                  className='absolute right-1 top-1/2 -translate-y-1/2 p-4 bg-white hover:scale-125 rounded-full'
+                > <FaRegComment className=" text-pink-600" /> </butoon>
+                </>
+              </form>
+              </div>
           </div>
         ))}
       </div>

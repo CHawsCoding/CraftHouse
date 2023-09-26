@@ -29,7 +29,7 @@ return (
           value={searchTerm}
           onChange={handleChange}
         />
-        <button className="absolute right-1 top-1/2 -translate-y-1/2 p-4 bg-slate-900 rounded-full">
+        <button className="absolute right-1 top-1/2 -translate-y-1/2 p-4 bg-pink-500 hover:bg-pink-600 rounded-full">
           <AiOutlineSearch />
         </button>
       </div>
