@@ -8,7 +8,7 @@ function Create() {
     description: '',
     materialsUsed: '',
     instructions: '',
-    images: '',
+    file: null, //add a file property to hold the uploaded file
   });
 
   const [addDIY, { error }] = useMutation(ADD_DIY);
@@ -16,10 +16,17 @@ function Create() {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-
     setFormState({
       ...formState,
       [name]: value,
+    });
+  };
+  
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    setFormState({
+      ...formState,
+      file: file,
     });
   };
 
@@ -28,14 +35,13 @@ function Create() {
   
     // Split materialsUsed and images into arrays
     const materialsUsedArray = formState.materialsUsed.split(',').map((material) => material.trim());
-    const imagesArray = formState.images.split(',').map((image) => image.trim());
+
   
     try {
       const { data } = await addDIY({
         variables: {
           ...formState,
-          materialsUsed: materialsUsedArray.join(', '), // Join back into a comma-separated string
-          images: imagesArray.join(', '), // Join back into a comma-separated string
+          materialsUsed: materialsUsedArray.join(', '),
         },
       });
   
@@ -52,7 +58,7 @@ function Create() {
       description: '',
       materialsUsed: '',
       instructions: '',
-      images: '',
+      file: null, //reset the file property
     });
   };
 
@@ -119,11 +125,11 @@ function Create() {
             Images (comma-separated URLs):
           </label>
           <input
-            type="text"
-            name="images"
-            id="images"
-            value={formState.images}
-            onChange={handleInputChange}
+            type="file"
+            accept="image/jpeg, image/png"
+            name="file"
+            id="file"
+            onChange={handleFileUpload}
             required
             className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500"
           />
@@ -135,7 +141,7 @@ function Create() {
           Create DIY
         </button>
       </form>
-      {error && <p className="text-red-600 mt-2">{error.message}</p>}
+      {error && <p className="text-red-600 mt-2">Error: {error.message}</p>}
       {successMessage && <p className="text-green-600 mt-2">{successMessage}</p>}
     </div>
   );
