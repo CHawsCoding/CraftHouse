@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Auth from '../utils/auth';
+import { WiMoonAltWaningCrescent2 } from 'react-icons/wi';
 
-import handmade from '../images/handmade.png';
+import { VscBellDot } from 'react-icons/vsc';
+// import logo from '../images/logo.png';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,14 +16,15 @@ function Navbar() {
   const closeMenu = () => {
     setIsOpen(false);
   };
-
+  
   const logout = () => {
     Auth.logout();
   };
 
   return (
     <nav className='flex justify-between items-center p-4'>
-      <img src={handmade} alt='handmade' width='50px' />
+   
+       <WiMoonAltWaningCrescent2 className='text-pink-600' />
       <div className='hidden md:flex space-x-4'>
         <Link to='/'>Home</Link>
         {Auth.loggedIn() ? (
@@ -30,6 +33,7 @@ function Navbar() {
             <Link to='/create'>Create</Link>
             <Link to='/profile'>Profile</Link>
             <button onClick={logout}>Logout</button>
+            <VscBellDot className='text-pink-600 hover:animate-bounce' />
           </>
         ) : (
           <>
