@@ -6,7 +6,7 @@ function Create() {
   const [formState, setFormState] = useState({
     title: '',
     description: '',
-    materialsUsed: '',
+    materialsUsed: [''],
     instructions: '',
     images: '',
   });
@@ -23,26 +23,42 @@ function Create() {
     });
   };
 
+  const handleMaterialChange = (event, index) => {
+    const newMaterialsUsed = [...formState.materialsUsed];
+    newMaterialsUsed[index] = event.target.value;
+
+    setFormState({
+      ...formState,
+      materialsUsed: newMaterialsUsed,
+    });
+  };
+
+  const addMaterialField = () => {
+    setFormState({
+      ...formState,
+      materialsUsed: [...formState.materialsUsed, ''], // Add an empty string for a new field
+    });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
-    // Split materialsUsed and images into arrays
-    const materialsUsedArray = formState.materialsUsed.split(',').map((material) => material.trim());
+
+    // Remove empty materials fields
+    const materialsUsedArray = formState.materialsUsed.filter((material) => material.trim() !== '');
     const imagesArray = formState.images.split(',').map((image) => image.trim());
-  
+
     try {
       const { data } = await addDIY({
         variables: {
           ...formState,
-          materialsUsed: materialsUsedArray.join(', '), // Join back into a comma-separated string
-          images: imagesArray.join(', '), // Join back into a comma-separated string
+          materialsUsed: materialsUsedArray,
+          images: imagesArray.join(', '), 
         },
       });
-  
+
       console.log('New DIY created:', data.addDIY);
 
       setSuccessMessage('DIY successfully created!');
-
     } catch (err) {
       console.error(err);
     }
@@ -50,7 +66,7 @@ function Create() {
     setFormState({
       title: '',
       description: '',
-      materialsUsed: '',
+      materialsUsed: [''], // Reset to one empty field
       instructions: '',
       images: '',
     });
@@ -88,18 +104,30 @@ function Create() {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="materialsUsed" className="block text-gray-700 font-bold mb-2">
-            Materials Used (comma-separated):
+          <label htmlFor="materialsUsed" className="block text-gray-400 font-bold mb-2">
+            Materials Used:
           </label>
-          <input
-            type="text"
-            name="materialsUsed"
-            id="materialsUsed"
-            value={formState.materialsUsed}
-            onChange={handleInputChange}
-            required
-            className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500"
-          />
+          {formState.materialsUsed.map((material, index) => (
+            <div key={index} className="flex mb-2">
+              <input
+                type="text"
+                name="materialsUsed"
+                value={material}
+                onChange={(event) => handleMaterialChange(event, index)}
+                required
+                className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500"
+              />
+              {index === formState.materialsUsed.length - 1 && (
+                <button
+                  type="button"
+                  onClick={addMaterialField}
+                  className="bg-pink-500 hover:bg-pink-600 text-white rounded-full px-4 ml-2"
+                >
+                  +
+                </button>
+              )}
+            </div>
+          ))}
         </div>
         <div className="mb-4">
           <label htmlFor="instructions" className="block text-gray-700 font-bold mb-2">
@@ -130,7 +158,7 @@ function Create() {
         </div>
         <button
           type="submit"
-          className="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+          className="w-full py-2 px-4 bg-pink-500 hover:bg-pink-600 text-white rounded-md focus:outline-none focus:ring focus:ring-blue-200"
         >
           Create DIY
         </button>
