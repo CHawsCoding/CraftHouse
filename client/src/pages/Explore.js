@@ -132,7 +132,15 @@ function Explore() {
                     placeholder="Add a comment..."
                     className="text-black p-2 w-full"
                     name="commentInput"
-                   
+                    onClick={
+                      () => {
+                        if (localStorage.getItem('id_token')) {
+                          return;
+                        } else {
+                          alert('Please log in to comment');
+                        }
+                      }
+                    }
                   />
                   <button
                     type="submit"
