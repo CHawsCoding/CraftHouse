@@ -32,11 +32,22 @@ const diySchema = new mongoose.Schema(
         ref: 'Comment',
       },
     ],
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Like',
+      },
+    ],
   },
   {
     timestamps: true,
   }
 );
+// Add a text index to the DIY schema for searching
+diySchema.index({
+  title: 'text',
+  description: 'text'
+});
 
 const DIY = mongoose.model('DIY', diySchema);
 

@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
+const diySchema = require('./DIY');
+
 const userSchema = new mongoose.Schema(
   {
     username: {
@@ -31,6 +33,15 @@ const userSchema = new mongoose.Schema(
         ref: 'Comment',
       },
     ],
+    Likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Like',
+      },
+    ],
+  },
+  {
+    savedDIYs: [diySchema]
   },
   {
     timestamps: true,
@@ -50,6 +61,10 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
+
+userSchema.virtual('DIYCount').get(function () {
+  return this.DIYs.length;
+});
 
 const User = mongoose.model('User', userSchema);
 
