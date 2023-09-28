@@ -3,8 +3,8 @@ import { useQuery, useMutation } from '@apollo/client';
 import { GET_ALL_DIYS } from '../utils/queries';
 import { ADD_COMMENT, ADD_LIKE, REMOVE_LIKE } from '../utils/mutations';
 
-import { BiSolidLike } from 'react-icons/bi';
-import { BiSolidDislike } from 'react-icons/bi';
+import { SlLike } from 'react-icons/sl';
+import { SlDislike } from 'react-icons/sl';
 import { FaRegComment } from 'react-icons/fa';
 
 import explore from '../images/explore2.png';
@@ -76,6 +76,7 @@ function Explore() {
         ...prevComments,
         [id]: updatedComments,
       }));
+      e.target.commentInput.value = '';
     } catch (error) {
       console.error(error);
     }
@@ -114,11 +115,11 @@ function Explore() {
                 </p>
               </div>
               <div className="flex justify-between px-6 py-4 bg-gray-100 border-t border-gray-200">
-                <BiSolidLike
+                <SlLike
                   className="text-pink-600 hover:scale-125 cursor-pointer"
                   onClick={() => handleLike(DIY._id)}
                 />
-                <BiSolidDislike
+                <SlDislike
                   className="text-pink-600 hover:scale-125 cursor-pointer"
                   onClick={() => handleDislike(DIY._id)}
                 />
