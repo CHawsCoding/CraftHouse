@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, DIY, Comment } = require('../models');
+const { User, DIY, Comment, Like } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -29,14 +29,26 @@ const resolvers = {
                 .populate({
                   path: 'comments',
                   populate: { path: 'DIY' }, // Populate the DIY field in comments
-                });
+                })
+                .populate('likes'); // Populate the likes field in users
               return usersData;
             } catch (error) {
               console.error('Error fetching users data:', error);
               throw new Error('Unable to fetch users data');
             }
           },
+
+          //get a single DIY by _id
+          DIY: async (parent, { _id }) => {
+            const DIYData = await DIY.findById(_id)
+              .populate('user')
+              .populate('comments')
+              .populate('likes')
+              .exec();
           
+            return DIYData;
+          },
+                    
           //this one filters by username //but if username is not provided, it will return all DIYs
           DIYs: async (parent, { username }) => {
             const params = username ? { username } : {};
@@ -44,6 +56,7 @@ const resolvers = {
               .sort({ createdAt: -1 })
               .populate('user')
               .populate('comments')
+              .populate('likes')
               .exec();
           
             return DIYsData;
@@ -58,7 +71,27 @@ const resolvers = {
                 console.error('Error fetching all DIYs:', error);
                 throw new Error('Unable to fetch DIYs data');
             }
-        }
+        },
+        //search DIYs by title or description
+        searchDIYs: async (parent, { searchTerm }) => {
+            if (searchTerm) {
+              const searchResults = await DIY.find(
+                {
+                  $or: [
+                    { title: { $regex: searchTerm, $options: 'i' } },
+                    { description: { $regex: searchTerm, $options: 'i' } },
+                  ],
+                },
+                null,
+                { sort: { createdAt: -1 } }
+              ).populate('user');
+      
+              return searchResults;
+            }
+      
+            const allDIYs = await DIY.find().populate('user');
+            return allDIYs;
+          }
         
         },
 
@@ -119,25 +152,34 @@ const resolvers = {
         },        
         
         addComment: async (_, { DIYId, content }, context) => {
-            try {
+            try { 
               if (context.user) {
+                // Create a new comment document
                 const newComment = await Comment.create({
                   content,
                   user: context.user._id,
                   DIY: DIYId,
                 });
-      
-                // Update the DIY's comments field to include the new comment
+
+                // Update the DIY's comments array
                 await DIY.findByIdAndUpdate(DIYId, { $push: { comments: newComment._id } });
-      
-                return newComment;
+
+                // Update the User's comments array
+                await User.findByIdAndUpdate(context.user._id, { $push: { comments: newComment._id } });
+
+                // Populate the new comment and return it
+                const populatedComment = await Comment.findById(newComment._id)
+                  .populate('user')
+                  .exec();
+
+                return populatedComment;
               }
               throw new AuthenticationError('You need to be logged in to add a comment.');
             } catch (error) {
-              throw new UserInputError('Failed to add a comment.', { errors: error.errors });
+              throw new UserInputError('Failed to add the comment.', { errors: error.errors });
             }
           },
-
+     
           removeComment: async (_, { commentId }, context) => {
             try {
               if (context.user) {
@@ -188,6 +230,61 @@ const resolvers = {
             }
 
             throw new AuthenticationError('You need to be logged in!');
+        },    
+        addLike: async (parent, args, context) => {
+          if (context.user) {
+            const { DIYId } = args;
+        
+            // Create a new Like document
+            const newLike = await Like.create({
+              user: context.user._id,
+              DIY: DIYId,
+            });
+        
+            // Update the DIY's likes array
+            await DIY.findOneAndUpdate(
+              { _id: DIYId },
+              { $addToSet: { likes: newLike._id } }
+            );
+        
+            // Update the User's likes array
+            await User.findOneAndUpdate(
+              { _id: context.user._id },
+              { $addToSet: { likes: newLike._id } }
+            );
+        
+            return await DIY.findById(DIYId).populate('likes');
+          }
+        
+          throw new AuthenticationError('You need to be logged in!');
+        },     
+
+        removeLike: async (parent, args, context) => {
+          if (context.user) {
+            const { DIYId } = args;
+        
+            // Delete the Like document
+            await Like.findOneAndDelete({
+              user: context.user._id,
+              DIY: DIYId,
+            });
+        
+            // Update the DIY's likes array
+            await DIY.findOneAndUpdate(
+              { _id: DIYId },
+              { $pull: { likes: { user: context.user._id } } }
+            );
+        
+            // Update the User's likes array
+            await User.findOneAndUpdate(
+              { _id: context.user._id },
+              { $pull: { likes: { DIY: DIYId } } }
+            );
+        
+            return await DIY.findById(DIYId).populate('likes');
+          }
+        
+          throw new AuthenticationError('You need to be logged in!');
         },
     },
 };
