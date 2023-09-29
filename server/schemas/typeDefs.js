@@ -6,19 +6,26 @@ scalar Upload
 type Query {
     me: User
     users: [User]
+    DIY(_id: ID!): DIY
     DIYs: [DIY]
     allDIYs: [DIY]
-    comment(_id: ID!): Comment
+    comments(DIYId: ID): [Comment]
+    searchDIYs(searchTerm: String): [DIY]
 }
 
 type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addDIY(title: String!, description: String!, materialsUsed: [String], instructions: String!, file: Upload!): DIY
+    addDIY(title: String!, description: String!, materialsUsed: [String], instructions: String!, images: [String] ): DIY
+    
+    addComment(DIYId: ID!, content: String!): DIY
+    addLike(DIYId: ID!): Like
     addComment(content: String!): Comment
     saveDIY(DIYId: ID!): User
+
     removeDIY(DIYId: ID!): User
     removeComment(commentId: ID!): DIY
+    removeLike(DIYId: ID!): DIY
 }
 
 type Auth {
@@ -32,6 +39,9 @@ type User {
     email: String
     DIYs: [DIY]
     comments: [Comment]
+    likes: [Like]
+    savedDIYs: [DIY]
+    DIYCount: Int
 }
 
 type DIY {
@@ -43,6 +53,7 @@ type DIY {
     images: [String]
     user: User
     comments: [Comment]
+    likes: [Like]
 }
 
 type Comment {
@@ -52,6 +63,11 @@ type Comment {
     DIY: DIY
 }
 
+type Like {
+    _id: ID!
+    user: User!
+    DIY: DIY!
+  }
 `;
 
 module.exports = typeDefs;

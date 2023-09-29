@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Auth from '../utils/auth';
-import { WiMoonAltWaningCrescent2 } from 'react-icons/wi';
 
 import { VscBellDot } from 'react-icons/vsc';
-// import logo from '../images/logo.png';
+ import logo from '../images/logo.png';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,8 +22,7 @@ function Navbar() {
 
   return (
     <nav className='flex justify-between items-center p-4'>
-   
-       <WiMoonAltWaningCrescent2 className='text-pink-600' />
+      <img src={logo} alt='logo' className='w-10' />
       <div className='hidden md:flex space-x-4'>
         <Link to='/'>Home</Link>
         {Auth.loggedIn() ? (

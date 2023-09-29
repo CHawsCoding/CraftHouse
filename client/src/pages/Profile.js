@@ -3,6 +3,8 @@ import { useQuery } from '@apollo/client';
 import { GET_ME } from '../utils/queries';
 
 import profile from '../images/profile.png';
+import explore from '../images/explore.png';
+import SavedDIY from './savedDIY';
 
 function Profile() {
   const { loading, error, data } = useQuery(GET_ME);
@@ -13,6 +15,7 @@ function Profile() {
   const user = data.me;
 
   return (
+    <div className="explore-container bg-cover bg-center" style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5)), url(${explore})`, }}>
     <div className="flex flex-col items-center p-4">
       {/* Profile Picture */}
       <div className="rounded-full w-20 h-20 overflow-hidden bg-gray-300">
@@ -48,6 +51,11 @@ function Profile() {
           ))}
         </div>
       </div>
+      <div className='favorites-container'>
+        <h3 className="text-xl font-semibold">My Favorites</h3>
+         <SavedDIY />
+      </div>
+    </div>
     </div>
   );
 }

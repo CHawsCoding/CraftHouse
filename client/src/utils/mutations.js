@@ -55,18 +55,15 @@ export const ADD_DIY = gql`
 
 
 export const ADD_COMMENT = gql`
-
-    mutation addComment($DIYId: ID!, $content: String!) {
-        addComment(DIYId: $DIYId, content: $content) {
-            _id
-            content
-            createdAt
-            user {
-                _id
-                username
-            }
-        }
+  mutation AddComment($DIYId: ID!, $content: String!) {
+    addComment(DIYId: $DIYId, content: $content) {
+      _id
+      user {
+        _id
+        username
+      }
     }
+  }
 `;
 
 export const REMOVE_COMMENT = gql`
@@ -119,4 +116,25 @@ export const REMOVE_DIY = gql`
         }
     }
 `;
+export const ADD_LIKE = gql`
+  mutation AddLike($DIYId: ID!) {
+    addLike(DIYId: $DIYId) {
+      _id
+      user {
+        _id
+        username
+      }
+    }
+  }
+`;
 
+export const REMOVE_LIKE = gql`
+  mutation RemoveLike($DIYId: ID!) {
+    removeLike(DIYId: $DIYId) {
+      _id
+      user {
+        _id
+      }
+    }
+  }
+`;

@@ -13,7 +13,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^8.2.1"
+    "concurrently": "^8.2.1",
+    "graphql-upload": "^16.0.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.3"

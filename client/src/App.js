@@ -11,6 +11,7 @@ import Explore from './pages/Explore';
 
 import Footer from './components/Footer';
 import SearchBar from './components/searchBar';
+import DIYDetail from './components/DIYDetail';
 
 import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
@@ -49,6 +50,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/Create" element={ <Create /> } />
             <Route path="/explore" element={<Explore />} />
+            <Route path="/diy/:id" element={<DIYDetail />} />
           </Routes>
           <Footer />
         </div>
