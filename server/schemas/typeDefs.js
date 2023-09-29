@@ -20,7 +20,6 @@ type Mutation {
     
     addComment(DIYId: ID!, content: String!): DIY
     addLike(DIYId: ID!): Like
-    addComment(content: String!): Comment
     saveDIY(DIYId: ID!): User
 
     removeDIY(DIYId: ID!): User
