@@ -51,10 +51,12 @@ function Profile() {
           ))}
         </div>
       </div>
-      <div className='favorites-container'>
-        <h3 className="text-xl font-semibold">My Favorites</h3>
-         <SavedDIY />
-      </div>
+      <div className="favorites-container mt-8">
+  <h3 className="text-xl font-semibold">My Favorites</h3>
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+    <SavedDIY />
+  </div>
+</div>
     </div>
     </div>
   );
