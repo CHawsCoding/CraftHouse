@@ -5,6 +5,7 @@
   "homepage": "https://craft-house-333df780d3f8.herokuapp.com/",
   "proxy": "http://localhost:3001",
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@apollo/client": "^3.8.4",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
