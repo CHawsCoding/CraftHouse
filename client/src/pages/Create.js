@@ -72,10 +72,10 @@ function Create() {
     });
   };
 
-  return (
-    <div className="max-w-md mx-auto p-4">
-      <h2 className="text-2xl font-semibold mb-4">Create a New DIY</h2>
-      <form onSubmit={handleSubmit}>
+return (
+  <div className="max-w-md mx-auto p-4">
+    <h2 className="text-2xl font-semibold mb-4">Create a New DIY</h2>
+    <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div className="mb-4">
           <label htmlFor="title" className="block text-gray-700 font-bold mb-2">
             Title:
@@ -155,6 +155,7 @@ function Create() {
             required
             className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500"
           />
+          <img src={formState.file ? URL.createObjectURL(formState.file) : ''} alt="Selected" />
         </div>
         <button
           type="submit"

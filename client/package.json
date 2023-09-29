@@ -2,6 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://craft-house-90a3460f8438.herokuapp.com/",
   "proxy": "http://localhost:3001",
   "dependencies": {
     "@apollo/client": "^3.8.4",
