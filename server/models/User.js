@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const diySchema = require('./DIY');
-
 const userSchema = new mongoose.Schema(
   {
     username: {
@@ -33,15 +31,18 @@ const userSchema = new mongoose.Schema(
         ref: 'Comment',
       },
     ],
-    Likes: [
+    likes: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Like',
       },
     ],
-  },
-  {
-    savedDIYs: [diySchema]
+    savedDIYs: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'DIY',
+      },
+    ],
   },
   {
     timestamps: true,
