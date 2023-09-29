@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "start": "cd server && node server",
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
@@ -17,6 +20,7 @@
     "graphql-upload": "^16.0.2"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "nodemon": "^2.0.3"
   }
 }
