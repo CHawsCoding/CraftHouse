@@ -1,6 +1,8 @@
 const { gql } = require('apollo-server');
 
 const typeDefs = gql`
+scalar Upload
+
 type Query {
     me: User
     users: [User]
@@ -18,6 +20,7 @@ type Mutation {
     
     addComment(DIYId: ID!, content: String!): DIY
     addLike(DIYId: ID!): Like
+    addComment(content: String!): Comment
     saveDIY(DIYId: ID!): User
 
     removeDIY(DIYId: ID!): User
