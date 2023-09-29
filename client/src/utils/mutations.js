@@ -84,20 +84,20 @@ export const REMOVE_COMMENT = gql`
 `;
 
 export const SAVE_DIY = gql`
-    mutation saveDIY($DIYId: ID!) {
-        saveDIY(DIYId: $DIYId) {
-            _id
-            username
-            savedDIYs {
-                _id
-                title
-                description
-                materialsUsed
-                instructions
-                images
-            }
-        }
+mutation saveDIY($DIYId: ID!) {
+  saveDIY(DIYId: $DIYId) {
+    _id
+    username
+    savedDIYs {
+      _id
+      title
+      description
+      materialsUsed
+      instructions
+      images
     }
+  }
+}
 `;
 
 export const REMOVE_DIY = gql`

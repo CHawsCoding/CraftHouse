@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_ALL_DIYS } from '../utils/queries';
-import { ADD_COMMENT, ADD_LIKE, REMOVE_LIKE } from '../utils/mutations';
+import { ADD_COMMENT, ADD_LIKE, REMOVE_LIKE, SAVE_DIY } from '../utils/mutations';
 
 import { SlLike } from 'react-icons/sl';
 import { SlDislike } from 'react-icons/sl';
 import { FaRegComment } from 'react-icons/fa';
+import { HiOutlineSaveAs } from 'react-icons/hi';
 
 import explore from '../images/explore2.png';
 
@@ -14,10 +15,12 @@ function Explore() {
   const [showDetails, setShowDetails] = useState({});
   const [likes, setLikes] = useState({});
   const [comments, setComments] = useState({});
+  // const [savedDIYs, setSavedDIYs] = useState([]);
 
   const [addLikeMutation] = useMutation(ADD_LIKE);
   const [addCommentMutation] = useMutation(ADD_COMMENT);
   const [removeLikeMutation] = useMutation(REMOVE_LIKE);
+  const [saveDIYMutation] = useMutation(SAVE_DIY);
 
   if (loading) return <div className="text-center py-8">Loading...</div>;
   if (error) return <div className="text-center py-8">Error! {error.message}</div>;
@@ -82,12 +85,24 @@ function Explore() {
     }
   };
 
+  const handleSave = async (id) => {
+    try {
+      const { data } = await saveDIYMutation({
+        variables: { DIYId: id },
+      });
+      console.log(data);
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
+
 
   return (
     <div className="explore-container bg-cover bg-center" style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)), url(${explore})`, }}>
       <div className="container mx-auto py-8">
         <h2 className="text-3xl font-semibold text-center mb-8 text-white">Explore DIYs</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 mr-5 ml-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {DIYs.map((DIY) => (
             <div key={DIY._id} className="border rounded-lg shadow-md overflow-hidden">
               {DIY.images && DIY.images.length > 0 && (
@@ -115,14 +130,9 @@ function Explore() {
                 </p>
               </div>
               <div className="flex justify-between px-6 py-4 bg-gray-100 border-t border-gray-200">
-                <SlLike
-                  className="text-pink-600 hover:scale-125 cursor-pointer"
-                  onClick={() => handleLike(DIY._id)}
-                />
-                <SlDislike
-                  className="text-pink-600 hover:scale-125 cursor-pointer"
-                  onClick={() => handleDislike(DIY._id)}
-                />
+                <SlLike className="text-pink-600 hover:scale-125 cursor-pointer" onClick={() => handleLike(DIY._id)}/>
+                <SlDislike className="text-pink-600 hover:scale-125 cursor-pointer" onClick={() => handleDislike(DIY._id)}/>
+                <HiOutlineSaveAs className="text-pink-600 hover:scale-125 cursor-pointer" onClick={() => handleSave(DIY._id)}/>
                 <span className='text-black'>{likes[DIY._id] || 0} Likes</span>
               </div>
               {/* Comment section */}
@@ -144,9 +154,7 @@ function Explore() {
                     }
                   />
                   <button
-                    type="submit"
-                    className="absolute right-1 top-1/2 -translate-y-1/2 p-4 bg-white hover:scale-125 rounded-full cursor-pointer"
-                  >
+                    type="submit" className="absolute right-1 top-1/2 -translate-y-1/2 p-4 bg-white hover:scale-125 rounded-full cursor-pointer">
                     <FaRegComment className="text-pink-600" />
                   </button>
                 </form>

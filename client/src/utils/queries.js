@@ -165,3 +165,20 @@ export const GET_LIKES = gql`
     }
   }
 `;
+
+//get all saved DIYs for a single user
+export const GET_SAVED_DIYS = gql`
+query GetSavedDIYs($userId: ID!) {
+  user(id: $userId) {
+    _id
+    savedDIYs {
+      _id
+      title
+      description
+      materialsUsed
+      instructions
+      images
+    }
+  }
+}
+`;
