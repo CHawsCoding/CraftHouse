@@ -333,6 +333,26 @@ const resolvers = {
         
           throw new AuthenticationError('You need to be logged in!');
         },
+
+        uploadDIYImage: async (_, { file, DIYId }) => { 
+          try {
+            const { createReadStream, filename } = await file; // Destructure the file object returned from the client
+            const stream = createReadStream();
+            const urlPath = await storeUpload({ stream, filename });
+    
+            // Update the DIY document's images field with the URL path
+            const updatedDIY = await DIY.findByIdAndUpdate(
+              DIYId,
+              { $push: { images: urlPath } },
+              { new: true }
+            );
+    
+            return { filename, urlPath, updatedDIY };
+          } catch (error) {
+            console.error(error);
+            throw new Error('Failed to upload DIY image.');
+          }
+        },
     },
 };
 
