@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 import { GET_ME } from '../utils/queries';
 
 import profile from '../images/profile.png';
-import explore from '../images/explore.png';
+import explore from '../images/explore.jpg';
 import SavedDIY from './savedDIY';
 
 function Profile() {
@@ -23,8 +23,8 @@ function Profile() {
         <img src= { profile } alt="Profile" className="object-cover w-full h-full" />
       </div>
       <h2 className="text-2xl font-semibold mt-4">My Profile</h2>
-      <p className="text-gray-700">Username: {user.username}</p>
-      <p className="text-gray-700">Email: {user.email}</p>
+      <p className="text-gray-200">Username: {user.username}</p>
+      <p className="text-gray-200">Email: {user.email}</p>
 
       
       <div className="mt-8">
@@ -51,13 +51,9 @@ function Profile() {
           ))}
         </div>
       </div>
-      <div className="favorites-container mt-8">
-  <h3 className="text-xl font-semibold">My Favorites</h3>
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-    <SavedDIY />
-  </div>
-</div>
     </div>
+    <h3 className="font-semibold mt-4 text-center text-3xl text-pink-600 underline ">My favorites</h3>
+     <SavedDIY />
     </div>
   );
 }
