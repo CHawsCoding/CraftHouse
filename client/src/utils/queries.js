@@ -176,17 +176,12 @@ export const GET_LIKED_USERS = gql`
 
 //get all saved DIYs for a single user
 export const GET_SAVED_DIYS = gql`
-query GetSavedDIYs($userId: ID!) {
-  user(id: $userId) {
+query GetSavedDIYs {
+  getSavedDIYs {
     _id
-    savedDIYs {
-      _id
-      title
-      description
-      materialsUsed
-      instructions
-      images
-    }
+    title
+    description
+    images
   }
 }
 `;
