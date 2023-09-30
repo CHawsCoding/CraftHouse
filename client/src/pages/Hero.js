@@ -1,7 +1,6 @@
 import React from 'react';
 
-import hero from '../images/hero.png';
-
+import landing from '../images/landing.jpg';
 import DIY from '../images/DIY.jpg';
 import DIY2 from '../images/DIY2.jpg';
 import DIY3 from '../images/DIY3.jpg';
@@ -46,7 +45,7 @@ function Hero() {
         {/* Big Picture on the Right */}
         <div className="w-full md:w-1/2 mb-4 md:mb-0">
           <img
-            src={hero}
+            src={landing}
             alt="Big Image"
             className="w-full h-auto"
           />
@@ -54,12 +53,12 @@ function Hero() {
 
         {/* Text Content on the Left */}
         <div className="w-full md:w-1/2 md:pr-8">
-          <h1 className="text-2xl font-bold mb-4 ml-10">Sample Picture Gallery</h1>
+          <h1 className="text-2xl font-bold mb-4 ml-10">Welcome to CraftHouse!</h1>
           <p className="mb-4 ml-20">
-            Sample text
+            Join the Community and Start sharing your creative DIY ideas today!
           </p>
           <p className="mb-4 ml-20">
-           sample text
+           Interact with other DIYers and spread the inspiration!
           </p>
           {/* Add more text content as needed */}
         </div>
