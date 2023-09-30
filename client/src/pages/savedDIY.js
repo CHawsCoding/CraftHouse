@@ -13,7 +13,7 @@ function SavedDIY({ userId }) {
   const savedDIYs = data.getSavedDIYs;
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto p-4">
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 mt-4 ml-6 mr-6">
       {savedDIYs.map((diy) => (
         <div
