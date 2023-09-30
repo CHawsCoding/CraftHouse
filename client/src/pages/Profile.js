@@ -26,33 +26,8 @@ function Profile() {
       <p className="text-gray-200">Username: {user.username}</p>
       <p className="text-gray-200">Email: {user.email}</p>
 
-      
-      <div className="mt-8">
-        <h3 className="text-xl font-semibold">My DIYs</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-          
-          {user.DIYs.map((diy) => (
-            <div
-              key={diy._id}
-              className="border rounded-lg shadow-md overflow-hidden"
-            >
-              {/* DIY content */}
-              <div className="p-4">
-                <h4 className=" underline text-lg font-semibold">{diy.title}</h4>
-                <p className="text-gray-700">{diy.description}</p>
-              </div>
-              {/* Additional DIY details */}
-              <div className="p-4 border-t border-gray-200">
-                <p className="text-sm text-gray-500">Materials Used: {diy.materialsUsed}</p>
-                <p className="text-sm text-gray-500">Instructions: {diy.instructions}</p>
-                <p className="text-sm text-gray-500">Images: {diy.images}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
-    <h3 className="font-semibold mt-4 text-center text-3xl text-pink-600 underline ">My favorites</h3>
+    <h3 className="font-semibold mt-4 text-center text-3xl text-pink-600 underline ">My DIYs</h3>
      <SavedDIY />
     </div>
   );
