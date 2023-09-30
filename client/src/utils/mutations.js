@@ -29,7 +29,7 @@ export const ADD_DIY = gql`
     $title: String!
     $description: String!
     $materialsUsed: [String]
-    $instructions: String!
+    $instructions: [String]
     $images: [String]) 
     {
     addDIY(
