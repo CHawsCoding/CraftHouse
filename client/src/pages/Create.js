@@ -50,7 +50,37 @@ function Create() {
     });
   };
 
-  const handleImageChange = (event) => {
+  const handleInstructionChange = (event, index) => {
+    const newInstructions = [...formState.instructions];
+    newInstructions[index] = event.target.value;
+
+    setFormState({
+      ...formState,
+      instructions: newInstructions,
+    });
+  };
+
+  const addInstructionField = () => {
+    setFormState({
+      ...formState,
+      instructions: [...formState.instructions, ''], // Add an empty string for a new field
+    });
+
+    // console.log(formState.instructions);
+
+  };
+
+  const removeInstructionField = (index) => {
+    const newInstructions = [...formState.instructions];
+    newInstructions.splice(index, 1); // Remove the instruction input at the specified index
+
+    setFormState({
+      ...formState,
+      instructions: newInstructions,
+    });
+  };
+
+    const handleImageChange = (event) => {
     const selectedFiles = Array.from(event.target.files);
     const imageUrls = [];
 
@@ -104,33 +134,6 @@ function Create() {
       materialsUsed: [''], // Reset to one empty field
       instructions: [''],
       images: [],
-    });
-  };
-
-  const handleInstructionChange = (event, index) => {
-    const newInstructions = [...formState.instructions];
-    newInstructions[index] = event.target.value;
-
-    setFormState({
-      ...formState,
-      instructions: newInstructions,
-    });
-  };
-
-  const addInstructionField = () => {
-    setFormState({
-      ...formState,
-      instructions: [...formState.instructions, ''],
-    });
-  };
-
-  const removeInstructionField = (index) => {
-    const newInstructions = [...formState.instructions];
-    newInstructions.splice(index, 1);
-
-    setFormState({
-      ...formState,
-      instructions: newInstructions,
     });
   };
 
