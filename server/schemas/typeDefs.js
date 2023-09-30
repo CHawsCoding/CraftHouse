@@ -31,6 +31,8 @@ type Mutation {
     removeComment(commentId: ID!): DIY
     removeLike(DIYId: ID!): DIY
 
+    uploadDIYImage(file: Upload!, DIYId: ID!): File!
+
 }
 
 type Auth {
@@ -72,6 +74,11 @@ type Like {
     _id: ID!
     user: User!
     DIY: DIY!
+  }
+
+  type File {
+    filename: String!
+    urlPath: String!
   }
 `;
 
