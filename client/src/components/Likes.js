@@ -35,7 +35,6 @@ function Likes({ DIYId }) {
           ) : (
             <p className="text-pink-200"> {uniqueUsernamesArray[0]} and {uniqueUsernamesArray.length - 1} others liked this</p>
           )}
-          <p className="text-pink-300"> {totalLikes === 1 ? `${totalLikes} like` : `${totalLikes} likes to this DIY`}</p>
         </>
       )}
     </div>
