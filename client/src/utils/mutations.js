@@ -138,3 +138,12 @@ export const REMOVE_LIKE = gql`
     }
   }
 `;
+
+export const UPLOAD_DIY_IMAGE = gql`
+  mutation UploadDIYImage($file: Upload!, $DIYId: ID!) {
+    uploadDIYImage(file: $file, DIYId: $DIYId) {
+      filename
+      urlPath
+    }
+  }
+`;
