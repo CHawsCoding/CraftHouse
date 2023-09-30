@@ -13,7 +13,10 @@ const resolvers = {
                   .populate({
                       path: 'comments',
                       populate: { path: 'DIY' },
-                  });
+                  })
+                  .populate('likes') // Populate the likes field in users
+                  .populate('savedDIYs') // Populate the savedDIYs field in users
+                  .exec();
       
               return userData;
           }
@@ -28,9 +31,11 @@ const resolvers = {
                 .populate('DIYs')
                 .populate({
                   path: 'comments',
-                  populate: { path: 'DIY' }, // Populate the DIY field in comments
+                  populate: { path: 'DIY' },
                 })
-                .populate('likes'); // Populate the likes field in users
+                .populate('likes') // Populate the likes field in users
+                .populate('savedDIYs') // Populate the savedDIYs field in users
+                .exec();
               return usersData;
             } catch (error) {
               console.error('Error fetching users data:', error);
@@ -91,10 +96,56 @@ const resolvers = {
       
             const allDIYs = await DIY.find().populate('user');
             return allDIYs;
-          }
-        
-        },
+          },
 
+          getSavedDIYs: async (parent, args, context) => {
+            try {
+                if (context.user) {
+                    const user = await User.findById(context.user._id).populate('savedDIYs');
+                    return user.savedDIYs;
+                }
+                throw new AuthenticationError('You need to be logged in to get saved DIYs.');
+            } catch (error) {
+                console.error('Error fetching saved DIYs:', error);
+                throw new Error('Unable to fetch saved DIYs');
+            }
+        },
+          //get all comments by DIY id
+          getComments: async (parent, { DIYId }) => {
+            try {
+              const comments = await Comment.find({ DIY: DIYId })
+                .sort({ createdAt: -1 })
+                .populate('user') // Populate the user field for each comment
+                .exec();
+              return comments;
+            } catch (error) {
+              console.error('Error fetching comments:', error);
+              throw new Error('Unable to fetch comments');
+            }
+          },
+
+          //get all likes by DIY id
+          getLikes: async (parent, { DIYId }) => {
+            try {
+                const likes = await Like.find({ DIY: DIYId }).sort({ createdAt: -1 }).populate('user');
+                return likes;
+            } catch (error) {
+                console.error('Error fetching likes:', error);
+                throw new Error('Unable to fetch likes');
+            }
+        },
+          //get all users who liked a DIY
+          getLikedUsers: async (parent, { DIYId }) => {
+            try {
+                const likes = await Like.find({ DIY: DIYId }).populate('user');
+                return likes.map((like) => like.user);
+            } catch (error) {
+                console.error('Error fetching liked users:', error);
+                throw new Error('Unable to fetch liked users');
+            }
+        },
+          
+    },
     Mutation: {
         addUser: async (parent, { username, email, password }) => {
             const user = await User.create({ username, email, password });
@@ -152,33 +203,33 @@ const resolvers = {
         },        
         
         addComment: async (_, { DIYId, content }, context) => {
-            try { 
+          try {
               if (context.user) {
-                // Create a new comment document
-                const newComment = await Comment.create({
-                  content,
-                  user: context.user._id,
-                  DIY: DIYId,
-                });
+                  // Create a new comment document
+                  const newComment = await Comment.create({
+                      content,
+                      user: context.user._id,
+                      DIY: DIYId,
+                  });
 
-                // Update the DIY's comments array
-                await DIY.findByIdAndUpdate(DIYId, { $push: { comments: newComment._id } });
+                  // Update the DIY's comments array
+                  await DIY.findByIdAndUpdate(DIYId, { $push: { comments: newComment._id } });
 
-                // Update the User's comments array
-                await User.findByIdAndUpdate(context.user._id, { $push: { comments: newComment._id } });
+                  // Update the User's comments array
+                  await User.findByIdAndUpdate(context.user._id, { $push: { comments: newComment._id } });
 
-                // Populate the new comment and return it
-                const populatedComment = await Comment.findById(newComment._id)
-                  .populate('user')
-                  .exec();
+                  // Populate the new comment and return it
+                  const populatedComment = await Comment.findById(newComment._id).populate('user').exec();
 
-                return populatedComment;
+                  return populatedComment;
               }
               throw new AuthenticationError('You need to be logged in to add a comment.');
-            } catch (error) {
-              throw new UserInputError('Failed to add the comment.', { errors: error.errors });
-            }
-          },
+          } catch (error) {
+              console.error('Failed to add the comment:', error);
+              throw new Error('Failed to add the comment.');
+          }
+      },
+      
      
           removeComment: async (_, { commentId }, context) => {
             try {

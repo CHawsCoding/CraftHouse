@@ -2,16 +2,42 @@ import React from 'react';
 
 import hero from '../images/hero.png';
 
+import DIY from '../images/DIY.jpg';
+import DIY2 from '../images/DIY2.jpg';
+import DIY3 from '../images/DIY3.jpg';
+import DIY4 from '../images/DIY4.jpg';
+import DIY5 from '../images/DIY5.jpg';
+import DIY6 from '../images/DIY6.jpg';
+import DIY7 from '../images/DIY7.jpg';
+import DIY8 from '../images/DIY8.jpg';
+import DIY9 from '../images/DIY9.jpg';
+import DIY10 from '../images/DIY10.jpg';
+import DIY11 from '../images/DIY11.jpg';
+import DIY12 from '../images/DIY12.jpg';
+import DIY13 from '../images/DIY13.jpg';
+import DIY14 from '../images/DIY14.jpg';
+import DIY15 from '../images/DIY15.jpg';
+import DIY16 from '../images/DIY16.jpg';
+
 const imageUrls = [
-  'https://via.placeholder.com/150',
-  'https://via.placeholder.com/150',
-  'https://via.placeholder.com/150',
-  'https://via.placeholder.com/150',
-  'https://via.placeholder.com/150',
-  'https://via.placeholder.com/150',
-  'https://via.placeholder.com/150',
-  'https://via.placeholder.com/150',
+  DIY,
+  DIY2,
+  DIY3,
+  DIY4,
+  DIY5,
+  DIY6,
+  DIY7,
+  DIY8,
+  DIY9,
+  DIY10,
+  DIY11,
+  DIY12,
+  DIY13,
+  DIY14,
+  DIY15,
+  DIY16,
 ];
+
 
 function Hero() {
   return (

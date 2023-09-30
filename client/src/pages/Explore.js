@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_ALL_DIYS } from '../utils/queries';
+import { GET_ALL_DIYS, GET_LIKES } from '../utils/queries';
 import { ADD_COMMENT, ADD_LIKE, REMOVE_LIKE, SAVE_DIY } from '../utils/mutations';
 
 import { SlLike } from 'react-icons/sl';
 import { SlDislike } from 'react-icons/sl';
 import { FaRegComment } from 'react-icons/fa';
 import { HiOutlineSaveAs } from 'react-icons/hi';
+
+import Likes from '../components/Likes';
+import Comments from '../components/Comments';
 
 import explore from '../images/explore2.png';
 
@@ -97,7 +100,6 @@ function Explore() {
     }
   }
 
-
   return (
     <div className="explore-container bg-cover bg-center" style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)), url(${explore})`, }}>
       <div className="container mx-auto py-8">
@@ -113,8 +115,10 @@ function Explore() {
                 />
               )}
               <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2">{DIY.title}</h3>
+              <div key={DIY._id} className="border p-10 rounded-lg shadow-md overflow-hidden">
+              <h3 className="text-xl font-semibold mb-2">{DIY.title}</h3>
                 <p className="text-gray-700">{DIY.description}</p>
+                </div>
                 <ul className={`mt-4 ${showDetails[DIY._id] ? 'block' : 'hidden'}`}>
                   {DIY.materialsUsed.map((material) => (
                     <li key={material} className="text-gray-700">
@@ -128,13 +132,26 @@ function Explore() {
                 <p className={`text-gray-700 ${showDetails[DIY._id] ? 'block' : 'hidden'}`}>
                   By: {DIY.user.username}
                 </p>
+                
               </div>
+              <div className="text-center p-4">
+                <button
+                  onClick={() => toggleDetails(DIY._id)}className="text-pink-600 font-semibold underline cursor-pointer">
+                  {showDetails[DIY._id] ? 'Show Less' : 'Learn More'}
+                </button>
+              </div>
+
+              <div className='flex flex-auto border-t border-pink-500'>
+                <Likes DIYId={DIY._id} />
+              </div>
+
+              {/* users interaction section */}
               <div className="flex justify-between px-6 py-4 bg-gray-100 border-t border-gray-200">
                 <SlLike className="text-pink-600 hover:scale-125 cursor-pointer" onClick={() => handleLike(DIY._id)}/>
                 <SlDislike className="text-pink-600 hover:scale-125 cursor-pointer" onClick={() => handleDislike(DIY._id)}/>
                 <HiOutlineSaveAs className="text-pink-600 hover:scale-125 cursor-pointer" onClick={() => handleSave(DIY._id)}/>
-                <span className='text-black'>{likes[DIY._id] || 0} Likes</span>
               </div>
+                
               {/* Comment section */}
               <div className="relative">
                 <form className="commentForm" onSubmit={(e) => handleComment(e, DIY._id)}>
@@ -153,20 +170,15 @@ function Explore() {
                       }
                     }
                   />
-                  <button
+                  {/* <button
                     type="submit" className="absolute right-1 top-1/2 -translate-y-1/2 p-4 bg-white hover:scale-125 rounded-full cursor-pointer">
                     <FaRegComment className="text-pink-600" />
-                  </button>
+                  </button> */}
+                  <div className="flex flex-col-reverse">                  
+                  </div>                  
                 </form>
-              </div>
-              <div className="text-center p-4">
-                <button
-                  onClick={() => toggleDetails(DIY._id)}
-                  className="text-pink-600 font-semibold underline cursor-pointer"
-                >
-                  {showDetails[DIY._id] ? 'Show Less' : 'Learn More'}
-                </button>
-              </div>
+                <Comments DIYId={DIY._id} />
+              </div>             
             </div>
           ))}
         </div>

@@ -141,20 +141,19 @@ export const SEARCH_DIYS = gql`
 
 //get all comments for a single DIY
 export const GET_COMMENTS = gql`
-query GetComments($DIYId: ID) {
-    comments(DIYId: $DIYId) {
+query GetComments($DIYId: ID!) {
+  getComments(DIYId: $DIYId) {
+    _id
+    content
+    user {
       _id
-      content
-      createdAt
-      user {
-        _id
-        username
-      }
+      username
     }
-  }  
+  }
+}
 `;
 
-//get all Likes for a single DIY
+// Get all Likes for a single DIY
 export const GET_LIKES = gql`
   query GetLikes($DIYId: ID!) {
     getLikes(DIYId: $DIYId) {
@@ -162,6 +161,15 @@ export const GET_LIKES = gql`
       user {
         _id
       }
+    }
+  }
+`;
+// Get all liked users for a single DIY
+export const GET_LIKED_USERS = gql`
+  query GetLikedUsers($DIYId: ID!) {
+    getLikedUsers(DIYId: $DIYId) {
+      _id
+      username
     }
   }
 `;

@@ -9,8 +9,13 @@ type Query {
     DIY(_id: ID!): DIY
     DIYs: [DIY]
     allDIYs: [DIY]
-    comments(DIYId: ID): [Comment]
+
     searchDIYs(searchTerm: String): [DIY]
+
+    getSavedDIYs: [DIY]
+    getLikedUsers(DIYId: ID!): [User] 
+    getLikes(DIYId: ID!): [Like]    
+    getComments(DIYId: ID): [Comment]
 }
 
 type Mutation {
@@ -25,6 +30,7 @@ type Mutation {
     removeDIY(DIYId: ID!): User
     removeComment(commentId: ID!): DIY
     removeLike(DIYId: ID!): DIY
+
 }
 
 type Auth {
@@ -50,7 +56,7 @@ type DIY {
     materialsUsed: [String]
     instructions: String
     images: [String]
-    user: User
+    user: User!
     comments: [Comment]
     likes: [Like]
 }
