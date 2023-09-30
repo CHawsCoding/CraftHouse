@@ -8,7 +8,7 @@ function Create() {
     description: '',
     materialsUsed: [''],
     instructions: '',
-    images: '',
+    images: [],
   });
 
   const [addDIY, { error }] = useMutation(ADD_DIY);
@@ -40,19 +40,44 @@ function Create() {
     });
   };
 
+  const handleImageChange = (event) => {
+    const selectedFiles = Array.from(event.target.files);
+    const imageUrls = [];
+
+    selectedFiles.forEach(async (file) => {
+      const imageUrl = await readImageAsDataURL(file);
+      imageUrls.push(imageUrl);
+    });
+
+    setFormState({
+      ...formState,
+      images: imageUrls,
+    });
+  };
+
+  const readImageAsDataURL = (file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        resolve(event.target.result);
+      };
+
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     // Remove empty materials fields
     const materialsUsedArray = formState.materialsUsed.filter((material) => material.trim() !== '');
-    const imagesArray = formState.images.split(',').map((image) => image.trim());
 
     try {
       const { data } = await addDIY({
         variables: {
           ...formState,
           materialsUsed: materialsUsedArray,
-          images: imagesArray.join(', '), 
         },
       });
 
@@ -68,9 +93,10 @@ function Create() {
       description: '',
       materialsUsed: [''], // Reset to one empty field
       instructions: '',
-      images: '',
+      images: [],
     });
   };
+
 
 return (
   <div className="max-w-md mx-auto p-4">
@@ -144,23 +170,23 @@ return (
         </div>
         <div className="mb-4">
           <label htmlFor="images" className="block text-gray-700 font-bold mb-2">
-            Images (comma-separated URLs):
+            Images:
           </label>
           <input
-            type="text"
+            type="file"
             name="images"
             id="images"
-            value={formState.images}
-            onChange={handleInputChange}
+            onChange={handleImageChange}
+            multiple
             required
             className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500"
           />
-          <img src={formState.file ? URL.createObjectURL(formState.file) : ''} alt="Selected" />
+          {/* Display selected images */}
+          {formState.images.map((imageUrl, index) => (
+            <img key={index} src={imageUrl} alt={`Selected Image ${index + 1}`} className="mt-2 max-h-32" />
+          ))}
         </div>
-        <button
-          type="submit"
-          className="w-full py-2 px-4 bg-pink-500 hover:bg-pink-600 text-white rounded-md focus:outline-none focus:ring focus:ring-blue-200"
-        >
+        <button type="submit" className="w-full py-2 px-4 bg-pink-500 hover:bg-pink-600 text-white rounded-md focus:outline-none focus:ring focus:ring-blue-200">
           Create DIY
         </button>
       </form>
