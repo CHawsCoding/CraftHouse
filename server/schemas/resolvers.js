@@ -99,17 +99,13 @@ const resolvers = {
           },
 
           getSavedDIYs: async (parent, args, context) => {
-            try {
-                if (context.user) {
-                    const user = await User.findById(context.user._id).populate('savedDIYs');
-                    return user.savedDIYs;
-                }
-                throw new AuthenticationError('You need to be logged in to get saved DIYs.');
-            } catch (error) {
-                console.error('Error fetching saved DIYs:', error);
-                throw new Error('Unable to fetch saved DIYs');
+            if (context.user) {
+                const user = await User.findById(context.user._id).populate('savedDIYs');
+                return user.savedDIYs;
             }
+            throw new AuthenticationError('Error!');
         },
+        
           //get all comments by DIY id
           getComments: async (parent, { DIYId }) => {
             try {
