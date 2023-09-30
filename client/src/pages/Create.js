@@ -7,7 +7,7 @@ function Create() {
     title: '',
     description: '',
     materialsUsed: [''],
-    instructions: '',
+    instructions: [''],
     images: [],
   });
 
@@ -102,12 +102,37 @@ function Create() {
       title: '',
       description: '',
       materialsUsed: [''], // Reset to one empty field
-      instructions: '',
+      instructions: [''],
       images: [],
     });
   };
 
+  const handleInstructionChange = (event, index) => {
+    const newInstructions = [...formState.instructions];
+    newInstructions[index] = event.target.value;
 
+    setFormState({
+      ...formState,
+      instructions: newInstructions,
+    });
+  };
+
+  const addInstructionField = () => {
+    setFormState({
+      ...formState,
+      instructions: [...formState.instructions, ''],
+    });
+  };
+
+  const removeInstructionField = (index) => {
+    const newInstructions = [...formState.instructions];
+    newInstructions.splice(index, 1);
+
+    setFormState({
+      ...formState,
+      instructions: newInstructions,
+    });
+  };
 
   return (
     <div className="max-w-md mx-auto p-4">
@@ -124,7 +149,7 @@ function Create() {
             value={formState.title}
             onChange={handleInputChange}
             required
-            className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500"
+            className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-pink-500"
           />
         </div>
         <div className="mb-4">
@@ -137,48 +162,80 @@ function Create() {
             value={formState.description}
             onChange={handleInputChange}
             required
-            className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500"
+            className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-pink-500"
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="materialsUsed" className="block text-gray-400 font-bold mb-2">
-            Materials Used:
-          </label>
-          {formState.materialsUsed.map((material, index) => (
-            <div key={index} className="flex mb-2">
-              <input
-                type="text"
-                name="materialsUsed"
-                value={material}
-                onChange={(event) => handleMaterialChange(event, index)}
-                required
-                className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500"
-              />
-              <button
-                  type="button"
-                  onClick={addMaterialField} className="bg-pink-500 hover:bg-pink-600 text-white rounded-full px-4 ml-2">
-                  +
-                </button>
-              {index === formState.materialsUsed.length - 1 && (
-                <button type="button" onClick={() => removeMaterialField(index)}
-                className="bg-pink-500 hover:bg-pink-600 text-white rounded-full px-4 ml-2">
-                -
-              </button>
-              )}
-            </div>
-          ))}
+  <label htmlFor="materialsUsed" className="block text-gray-400 font-bold mb-2">
+    Materials Used:
+  </label>
+  {formState.materialsUsed.map((material, index) => (
+    <div key={index} className="flex mb-2">
+      <input
+        type="text"
+        name="materialsUsed"
+        value={material}
+        onChange={(event) => handleMaterialChange(event, index)}
+        required
+        className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-pink-500"
+      />
+      {index === formState.materialsUsed.length - 1 && (
+        <div className="flex items-center ml-2">
+          {index > 0 && (
+            <button
+              type="button"
+              onClick={() => removeMaterialField(index)} className="bg-pink-500 hover:bg-pink-600 text-white rounded-full w-10 h-10 px-4 ml-23">
+              -
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={addMaterialField}
+            className="bg-pink-500 hover:bg-pink-600 text-white rounded-full w-10 h-10 px-4 ml-2"
+          >
+            +
+          </button>
         </div>
+      )}
+    </div>
+  ))}
+</div>
         <div className="mb-4">
           <label htmlFor="instructions" className="block text-gray-700 font-bold mb-2">
             Instructions:
           </label>
-          <textarea
-            name="instructions"
-            id="instructions"
-            value={formState.instructions}
-            onChange={handleInputChange}
-            required
-            className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500"/>
+          {formState.instructions.map((instruction, index) => (
+            <div key={index} className="flex mb-2">
+              <input
+                type="text"
+                name="instructions"
+                value={instruction}
+                onChange={(event) => handleInstructionChange(event, index)}
+                required
+                className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-pink-500"
+              />
+              {index === formState.instructions.length - 1 && (
+                <div className="flex items-center ml-2">
+                  {index > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => removeInstructionField(index)}
+                      className="bg-pink-500 hover:bg-pink-600 text-white rounded-full w-10 h-10 px-4 ml-23"
+                    >
+                      -
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    onClick={addInstructionField}
+                    className="bg-pink-500 hover:bg-pink-600 text-white rounded-full w-10 h-10 px-4 ml-2"
+                  >
+                    +
+                  </button>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
         <div className="mb-4">
           <label htmlFor="images" className="block text-gray-700 font-bold mb-2">
