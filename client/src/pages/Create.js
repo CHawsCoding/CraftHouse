@@ -152,7 +152,7 @@ function Create() {
             value={formState.title}
             onChange={handleInputChange}
             required
-            className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-pink-500"
+            className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-yellow-500"
           />
         </div>
         <div className="mb-4">
@@ -187,14 +187,14 @@ function Create() {
           {index > 0 && (
             <button
               type="button"
-              onClick={() => removeMaterialField(index)} className="bg-pink-500 hover:bg-pink-600 text-white rounded-full w-10 h-10 px-4 ml-23">
+              onClick={() => removeMaterialField(index)} className="bg-yellow-500 hover:bg-yellow-500 text-white rounded-full w-10 h-10 px-4 ml-23">
               -
             </button>
           )}
           <button
             type="button"
             onClick={addMaterialField}
-            className="bg-pink-500 hover:bg-pink-600 text-white rounded-full w-10 h-10 px-4 ml-2"
+            className="bg-yellow-500 hover:bg-yellow-600 text-white rounded-full w-10 h-10 px-4 ml-2"
           >
             +
           </button>
@@ -223,7 +223,7 @@ function Create() {
                     <button
                       type="button"
                       onClick={() => removeInstructionField(index)}
-                      className="bg-pink-500 hover:bg-pink-600 text-white rounded-full w-10 h-10 px-4 ml-23"
+                      className="bg-yellow-500 hover:bg-yellow-600 text-white rounded-full w-10 h-10 px-4 ml-23"
                     >
                       -
                     </button>
@@ -231,7 +231,7 @@ function Create() {
                   <button
                     type="button"
                     onClick={addInstructionField}
-                    className="bg-pink-500 hover:bg-pink-600 text-white rounded-full w-10 h-10 px-4 ml-2"
+                    className="bg-yellow-500 hover:bg-yellow-600 text-white rounded-full w-10 h-10 px-4 ml-2"
                   >
                     +
                   </button>
@@ -258,7 +258,7 @@ function Create() {
             <img key={index} src={imageUrl} alt={`Selected Image ${index + 1}`} className="mt-2 max-h-32" />
           ))}
         </div>
-        <button type="submit" className="w-full py-2 px-4 bg-pink-500 hover:bg-pink-600 text-white rounded-md focus:outline-none focus:ring focus:ring-blue-200">
+        <button type="submit" className="w-full py-2 px-4 bg-yellow-700 hover:bg-yellow-600 text-white rounded-md focus:outline-none focus:ring focus:ring-blue-200">
           Create DIY
         </button>
       </form>

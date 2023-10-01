@@ -35,7 +35,7 @@ function Comments({ DIYId }) {
       )}
 
       {comments.length > 1 && (
-        <button onClick={openModal} className="text-pink-600 cursor-pointer">
+        <button onClick={openModal} className="text-yellow-500 cursor-pointer">
           View All Comments
         </button>
       )}
@@ -43,15 +43,15 @@ function Comments({ DIYId }) {
       {/* Comments Modal */}
       {isModalOpen && (
         <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-opacity-50 bg-black z-50 overflow-y-auto">
-          <div className="bg-black p-4 border-white rounded-lg shadow-lg w-11/12 max-w-xl border"> 
+          <div className="bg-white p-4 border-white rounded-lg shadow-lg w-11/12 max-w-xl border"> 
             {comments.map((comment, index) => (
               <div key={index} className="mb-2">
                 <p className="font-semibold text-indigo-700">{comment.user.username}</p>
-                <p className="text-gray-200">{comment.content}</p>
+                <p className="text-gray-800">{comment.content}</p>
                 <span className="border-t border-gray-500 block my-2"></span>
               </div>
             ))}
-            <button onClick={closeModal} className="text-pink-600 cursor-pointer">
+            <button onClick={closeModal} className="text-red-700 font-bold cursor-pointer">
               Close
             </button>
           </div>

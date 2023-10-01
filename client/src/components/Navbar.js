@@ -25,19 +25,19 @@ function Navbar() {
     <nav className='flex justify-between items-center p-4'>
       <img src={logo} alt='logo' className='w-10' />
       <div className='hidden md:flex space-x-4'>
-        <Link to='/' className={location.pathname === '/' ? 'text-pink-600' : ''}>Home</Link> 
+        <Link to='/' className={location.pathname === '/' ? 'text-yellow-500' : ''}>Home</Link> 
         {Auth.loggedIn() ? (
           <>
-            <Link to='/explore' className={location.pathname === '/explore' ? 'text-pink-600' : ''}>Explore</Link> 
-            <Link to='/create' className={location.pathname === '/create' ? 'text-pink-600' : ''}>Create</Link> 
-            <Link to='/profile' className={location.pathname === '/profile' ? 'text-pink-600' : ''}>Profile</Link> 
+            <Link to='/explore' className={location.pathname === '/explore' ? 'text-yellow-500' : ''}>Explore</Link> 
+            <Link to='/create' className={location.pathname === '/create' ? 'text-yellow-500' : ''}>Create</Link> 
+            <Link to='/profile' className={location.pathname === '/profile' ? 'text-yellow-500' : ''}>Profile</Link> 
             <button onClick={logout}>Logout</button>
             <VscBellDot className='text-pink-600 hover:animate-bounce' />
           </>
         ) : (
           <>
-            <Link to='/explore' className={location.pathname === '/explore' ? 'text-pink-600' : ''}>Explore</Link> 
-            <Link to='/login' className={location.pathname === '/login' ? 'text-pink-600' : ''}>Login</Link> 
+            <Link to='/explore' className={location.pathname === '/explore' ? 'text-yellow-500' : ''}>Explore</Link> 
+            <Link to='/login' className={location.pathname === '/login' ? 'text-yellow-500' : ''}>Login</Link> 
           </>
         )}
       </div>

@@ -15,32 +15,30 @@ function Profile() {
   const user = data.me;
 
   return (
-    <div className="explore-container bg-cover bg-center" style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5)), url(${explore})`, }}>
-    <div className="flex flex-col items-center p-4">
+    <div className="explore-container">
+    <div className="flex flex-col items-center p-8">
       {/* Profile Picture */}
-      <div className="rounded-full w-20 h-20 overflow-hidden bg-gray-300">
+      <div className="rounded-full w-20">
         
         <img src= { profile } alt="Profile" className="object-cover w-full h-full" />
       </div>
       <h2 className="text-2xl font-semibold mt-4">My Profile</h2>
-      <p className="text-gray-200">Username: {user.username}</p>
-      <p className="text-gray-200">Email: {user.email}</p>
+      <p className="text-gray-500">Username: {user.username}</p>
+      <p className="text-gray-500">Email: {user.email}</p>
 
 
-      <div className="mt-8">
-        <h3 className="text-3xl font-semibold text-pink-500 text-center">My DIYs</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+      <div className="container mx-auto p-4">
+        <h3 className="text-3xl font-semibold text-yellow-500 text-center">My DIYs</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 mt-4">
 
           {user.DIYs.map((diy) => (
             <div key={diy._id} className="border rounded-lg shadow-md overflow-hidden">
               {/* DIY content */}
               <div className="p-4">
                 <h4 className=" underline text-lg font-semibold">{diy.title}</h4>
-                <p className="text-gray-700">{diy.description}</p>
               </div>
-              {/* Additional DIY details */}
-              <div className="p-4 border-t border-gray-200">
-                <p className="text-sm text-gray-500">Images: {diy.images}</p>
+              <div className="p-4 border-t border-gray-400">
+                <div className="text-sm text-gray-400"><img src = {diy.images[0]} alt="my DIYs" className="object-cover w-1/2 text-center" /></div>
               </div>
             </div>
           ))}
@@ -48,7 +46,7 @@ function Profile() {
       </div>
 
     </div>
-    <h3 className="font-semibold mt-4 text-center text-3xl text-pink-600 underline ">My favourites</h3>
+    <h3 className="font-semibold mt-4 text-center text-3xl text-yellow-500 border-t border-gray-500 underline ">My favourites</h3>
      <SavedDIY />
     </div>
   );

@@ -14,7 +14,7 @@ function SavedDIY({ userId }) {
 
   return (
     <div className="container mx-auto p-4">
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 mt-4 ml-6 mr-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-6 mt-4 ml-4 mr-4">
       {savedDIYs.map((diy) => (
         <div
           key={diy._id}
@@ -22,11 +22,10 @@ function SavedDIY({ userId }) {
         >
           {/* DIY content */}
           <div className="p-4">
-            <h4 className="underline text-lg font-semibold text-center">{diy.title}</h4>
+            <h4 className="text-yellow-500 text-lg font-semibold text-center">{diy.title}</h4>
           </div>
-          {/* Additional DIY details */}
-          <div className="p-4 border-t border-gray-200">
-            <p className="text-sm text-gray-200">Images: {diy.images}</p>
+          <div className="p-4 border-t border-gray-400">
+            <p className="text-sm text-gray-200">Description: {diy.description}</p>
           </div>
         </div>
       ))}

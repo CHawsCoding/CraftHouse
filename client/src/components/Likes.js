@@ -27,13 +27,13 @@ function Likes({ DIYId }) {
   return (
     <div className="ml-2">
       {totalLikes === 0 ? (
-        <p className="text-pink-200">0 likes</p>
+        <p className="text-gray-300">0 likes</p>
       ) : (
         <>
           {uniqueUsernamesArray.length === 1 ? (
-            <p className="text-pink-200"> {uniqueUsernamesArray[0]} likes this</p>
+            <p className="text-gray-300"> {uniqueUsernamesArray[0]} likes this</p>
           ) : (
-            <p className="text-pink-200"> {uniqueUsernamesArray[0]} and {uniqueUsernamesArray.length - 1} others liked this</p>
+            <p className="text-gray-300"> {uniqueUsernamesArray[0]} and {uniqueUsernamesArray.length - 1} others liked this</p>
           )}
         </>
       )}

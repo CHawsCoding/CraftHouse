@@ -107,7 +107,7 @@ const DIYDetail = () => {
     <div className="min-h-screen border-white py-12">
       <div className="max-w-3xl mx-auto p-6 rounded-lg shadow-lg">
         <div className="flex flex-col items-center">
-          <h2 className="text-3xl font-semibold text-gray-400 mt-4 mb-4 underline">
+          <h2 className="text-3xl font-semibold text-yellow-500 mt-4 mb-4 underline">
             {diy.title}
           </h2>
           {/* Render the image at the top and centered */}
@@ -118,11 +118,11 @@ const DIYDetail = () => {
         <table className="table-auto w-full mt-8 border">
           <tbody>
             <tr className="border-b-2 border-gray-400">
-              <td className="text-gray-400 font-semibold text-2xl border-r-2 border-gray-400 pr-4">Description</td>
+              <td className="text-yellow-500 font-semibold text-2xl border-r-2 border-gray-400 pr-4">Description</td>
               <td className="text-gray-400">{diy.description}</td>
             </tr>
             <tr className="border-b-2 border--400">
-              <td className="text-gray-400 font-semibold text-2xl border-r-2 border-gray-400 pr-4">Materials</td>
+              <td className="text-yellow-500 font-semibold text-2xl border-r-2 border-gray-400 pr-4">Materials</td>
               <td className="text-gray-400">
                 <ul className="list-disc list-inside">
                   {diy.materialsUsed.map((material, index) => (
@@ -132,16 +132,22 @@ const DIYDetail = () => {
               </td>
             </tr>
             <tr className="border-b-2 border-gray-400">
-              <td className="text-gray-400 font-semibold text-2xl border-r-2 border-gray-400 pr-4">Instructions</td>
-              <td className="text-gray-400 text-justify">{diy.instructions}</td>
+              <td className="text-yellow-500 font-semibold text-2xl border-r-2 border-gray-400 pr-4">Instructions</td>
+              <td className="text-gray-400">
+                <ol className="list-decimal list-inside">
+                  {diy.instructions.map((instruction, index) => (
+                    <li className='border p-2' key={index}>{instruction}</li>
+                  ))}
+                </ol>
+              </td>
             </tr>
           </tbody>
         </table>
 
         <div className="flex justify-between px-6 py-4 mt-5 border-b border-gray-200">
-          <SlLike size={24} className="text-pink-600 hover:scale-125 cursor-pointer" onClick={() => handleLike(diy._id)}/>
-                <SlDislike size={24} className="text-pink-600 hover:scale-125 cursor-pointer" onClick={() => handleDislike(diy._id)}/>
-                <HiOutlineSaveAs size={24} className="text-pink-600 hover:scale-125 cursor-pointer" onClick={() => handleSave(diy._id)}/>
+          <SlLike size={24} className="text-white hover:text-yellow-500 hover:scale-125 cursor-pointer" onClick={() => handleLike(diy._id)}/>
+                <SlDislike size={24} className="text-white hover:text-yellow-500 hover:scale-125 cursor-pointer" onClick={() => handleDislike(diy._id)}/>
+                <HiOutlineSaveAs size={24} className="text-white hover:text-yellow-500 hover:scale-125 cursor-pointer" onClick={() => handleSave(diy._id)}/>
           </div>
 
           <Likes DIYId={diy._id} />
