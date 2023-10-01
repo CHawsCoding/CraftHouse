@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_ALL_DIYS, GET_LIKES } from '../utils/queries';
+import { GET_ALL_DIYS} from '../utils/queries';
+import { Link } from 'react-router-dom';
 import { ADD_COMMENT, ADD_LIKE, REMOVE_LIKE, SAVE_DIY } from '../utils/mutations';
 
 import { SlLike } from 'react-icons/sl';
 import { SlDislike } from 'react-icons/sl';
-import { FaRegComment } from 'react-icons/fa';
 import { HiOutlineSaveAs } from 'react-icons/hi';
 
 import Likes from '../components/Likes';
 import Comments from '../components/Comments';
 
-import explore from '../images/explore2.png';
-
-function Explore() {
+function Explore({ primaryColor }) {
   const { loading, error, data } = useQuery(GET_ALL_DIYS);
-  const [showDetails, setShowDetails] = useState({});
   const [likes, setLikes] = useState({});
   const [comments, setComments] = useState({});
   // const [savedDIYs, setSavedDIYs] = useState([]);
@@ -28,19 +25,14 @@ function Explore() {
   if (loading) return <div className="text-center py-8">Loading...</div>;
   if (error) return <div className="text-center py-8">Error! {error.message}</div>;
 
-  const DIYs = data.DIYs;
+  const DIYs = data && data.DIYs ? data.DIYs : [];
 
-  const toggleDetails = (id) => {
-    setShowDetails((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
 
   const handleLike = async (id) => {
     try {
       const { data } = await addLikeMutation({
         variables: { DIYId: id },
+        refetchQueries: [{ query: GET_ALL_DIYS }],
       });
 
       const updatedLikes = data.addLike.likes;
@@ -57,6 +49,7 @@ function Explore() {
     try {
       const { data } = await removeLikeMutation({
         variables: { DIYId: id },
+        refetchQueries: [{ query: GET_ALL_DIYS }],
       });
   
       const updatedLikes = data.removeLike.likes;
@@ -101,64 +94,46 @@ function Explore() {
   }
 
   return (
-    <div className="explore-container bg-cover bg-center" style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)), url(${explore})`, }}>
-      <div className="container mx-auto py-8">
-        <h2 className="text-3xl font-semibold text-center mb-8 text-white">Explore DIYs</h2>
+    <div style={{ backgroundColor: primaryColor, color: 'white', padding: '16px' }} className="explore-container">
+      <div className="container mx-auto">
+        <h2 className="text-3xl font-semibold text-center mb-8 text-yellow-600">Explore DIYs</h2>
         <div className="grid grid-cols-1 mr-5 ml-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {DIYs.map((DIY) => (
-            <div key={DIY._id} className="border rounded-lg shadow-md overflow-hidden">
+          {DIYs.map((DIY, index) => (
+            <div key={DIY._id} className="bg-gray-900 border border-gray-300 rounded-lg shadow-md transition transform duration-300 hover:scale-105 overflow-hidden">
               {DIY.images && DIY.images.length > 0 && (
                 <img
                   src={DIY.images[0]}
                   alt={DIY.title}
-                  className="w-full h-48 object-cover"
+                  className="w-1/2 object-cover mx-auto"
                 />
               )}
-              <div className="p-6">
-              <div key={DIY._id} className="border p-10 rounded-lg shadow-md overflow-hidden">
-              <h3 className="text-xl font-semibold mb-2">{DIY.title}</h3>
-                <p className="text-gray-700">{DIY.description}</p>
-                </div>
-                <ul className={`mt-4 ${showDetails[DIY._id] ? 'block' : 'hidden'}`}>
-                  {DIY.materialsUsed.map((material) => (
-                    <li key={material} className="text-gray-700">
-                      {material}
-                    </li>
-                  ))}
-                </ul>
-                <p className={`text-gray-700 ${showDetails[DIY._id] ? 'block' : 'hidden'}`}>
-                  {DIY.instructions}
-                </p>
-                <p className={`text-gray-700 ${showDetails[DIY._id] ? 'block' : 'hidden'}`}>
-                  By: {DIY.user.username}
-                </p>
-                
+              <div className="p-6 border-t">              
+                  <h3 className="text-xl text-gray-500 font-semibold mb-2 text-center underline">{DIY.title}</h3>
               </div>
-              <div className="text-center p-4">
-                <button
-                  onClick={() => toggleDetails(DIY._id)}className="text-pink-600 font-semibold underline cursor-pointer">
-                  {showDetails[DIY._id] ? 'Show Less' : 'Learn More'}
-                </button>
+              <div className="text-center p-4">               
+                  <p className="text-gray-400">{DIY.description}</p>
+                <Link to={`/diy/${DIY._id}`} className="block p-4 hover:bg-gray-900">
+                  <h3 className="text-lg text-yellow-500 hover:text-yellow-600 font-semibold mb-2 text-center underline">Learn More</h3>
+                </Link>
               </div>
-
-              <div className='flex flex-auto border-t border-pink-500'>
+              <div className='flex flex-auto border-b border-gray-500'>
                 <Likes DIYId={DIY._id} />
               </div>
 
               {/* users interaction section */}
-              <div className="flex justify-between px-6 py-4 bg-gray-100 border-t border-gray-200">
-                <SlLike className="text-pink-600 hover:scale-125 cursor-pointer" onClick={() => handleLike(DIY._id)}/>
-                <SlDislike className="text-pink-600 hover:scale-125 cursor-pointer" onClick={() => handleDislike(DIY._id)}/>
-                <HiOutlineSaveAs className="text-pink-600 hover:scale-125 cursor-pointer" onClick={() => handleSave(DIY._id)}/>
+              <div className="flex justify-between px-6 py-4">
+                <SlLike size={24} className="text-white-600 hover:text-yellow-500 hover:scale-125 cursor-pointer" onClick={() => handleLike(DIY._id)}/>
+                <SlDislike size={24} className="text-white-600 hover:text-yellow-500 hover:scale-125 cursor-pointer" onClick={() => handleDislike(DIY._id)}/>
+                <HiOutlineSaveAs size={24} className="text-white-600 hover:text-yellow-500 hover:scale-125 cursor-pointer" onClick={() => handleSave(DIY._id)}/>
               </div>
-                
+
               {/* Comment section */}
               <div className="relative">
                 <form className="commentForm" onSubmit={(e) => handleComment(e, DIY._id)}>
                   <input
                     type="text"
                     placeholder="Add a comment..."
-                    className="text-black p-2 w-full"
+                    className="text-yellow-50 p-2 w-full bg-slate-500"
                     name="commentInput"
                     onClick={
                       () => {
@@ -170,15 +145,10 @@ function Explore() {
                       }
                     }
                   />
-                  {/* <button
-                    type="submit" className="absolute right-1 top-1/2 -translate-y-1/2 p-4 bg-white hover:scale-125 rounded-full cursor-pointer">
-                    <FaRegComment className="text-pink-600" />
-                  </button> */}
-                  <div className="flex flex-col-reverse">                  
-                  </div>                  
                 </form>
                 <Comments DIYId={DIY._id} />
-              </div>             
+              </div>
+              
             </div>
           ))}
         </div>

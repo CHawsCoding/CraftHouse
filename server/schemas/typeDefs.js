@@ -21,7 +21,7 @@ type Query {
 type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addDIY(title: String!, description: String!, materialsUsed: [String], instructions: String!, images: [String] ): DIY
+    addDIY(title: String!, description: String!, materialsUsed: [String], instructions: [String], images: [String] ): DIY
     
     addComment(DIYId: ID!, content: String!): DIY
     addLike(DIYId: ID!): Like
@@ -30,6 +30,9 @@ type Mutation {
     removeDIY(DIYId: ID!): User
     removeComment(commentId: ID!): DIY
     removeLike(DIYId: ID!): DIY
+    removeSavedDIY(DIYId: ID!): User
+
+    uploadDIYImage(file: Upload!, DIYId: ID!): File!
 
 }
 
@@ -54,7 +57,7 @@ type DIY {
     title: String
     description: String
     materialsUsed: [String]
-    instructions: String
+    instructions: [String]
     images: [String]
     user: User!
     comments: [Comment]
@@ -72,6 +75,11 @@ type Like {
     _id: ID!
     user: User!
     DIY: DIY!
+  }
+
+  type File {
+    filename: String!
+    urlPath: String!
   }
 `;
 

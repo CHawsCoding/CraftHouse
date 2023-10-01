@@ -5,6 +5,7 @@ import { GET_LIKED_USERS } from '../utils/queries';
 function Likes({ DIYId }) {
   const { loading, error, data } = useQuery(GET_LIKED_USERS, {
     variables: { DIYId },
+    refetchQueries: [{ query: GET_LIKED_USERS, variables: { DIYId } }],
   });
 
   if (loading) return <div className="text-center py-8">Loading...</div>;
@@ -27,13 +28,13 @@ function Likes({ DIYId }) {
   return (
     <div className="ml-2">
       {totalLikes === 0 ? (
-        <p className="text-pink-200">0 likes</p>
+        <p className="text-gray-300">0 likes</p>
       ) : (
         <>
           {uniqueUsernamesArray.length === 1 ? (
-            <p className="text-pink-200"> {uniqueUsernamesArray[0]} likes this</p>
+            <p className="text-gray-300"> {uniqueUsernamesArray[0]} likes this</p>
           ) : (
-            <p className="text-pink-200"> {uniqueUsernamesArray[0]} and {uniqueUsernamesArray.length - 1} others liked this</p>
+            <p className="text-gray-300"> {uniqueUsernamesArray[0]} and {uniqueUsernamesArray.length - 1} others liked this</p>
           )}
         </>
       )}

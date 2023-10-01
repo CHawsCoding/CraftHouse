@@ -99,17 +99,13 @@ const resolvers = {
           },
 
           getSavedDIYs: async (parent, args, context) => {
-            try {
-                if (context.user) {
-                    const user = await User.findById(context.user._id).populate('savedDIYs');
-                    return user.savedDIYs;
-                }
-                throw new AuthenticationError('You need to be logged in to get saved DIYs.');
-            } catch (error) {
-                console.error('Error fetching saved DIYs:', error);
-                throw new Error('Unable to fetch saved DIYs');
+            if (context.user) {
+                const user = await User.findById(context.user._id).populate('savedDIYs');
+                return user.savedDIYs;
             }
+            throw new AuthenticationError('Error!');
         },
+        
           //get all comments by DIY id
           getComments: async (parent, { DIYId }) => {
             try {
@@ -270,18 +266,67 @@ const resolvers = {
             throw new AuthenticationError('You need to be logged in!');
         },
         removeDIY: async (parent, { DIYId }, context) => {
-            if (context.user){
-                const updatedUser = await User.findOneAndUpdate(
-                    { _id: context.user._id },
-                    { $pull: { savedDIYs: DIYId } },
-                    { new: true }
-                ).populate('savedDIYs');
-
-                return updatedUser;
+          try {
+            if (context.user) {
+              // Find the DIY to be removed
+              const DIYToRemove = await DIY.findById(DIYId);
+    
+              // Check if the user trying to remove the DIY is the DIY's author
+              if (DIYToRemove.user.toString() === context.user._id.toString()) {
+                // Remove the DIY document
+                await DIY.findByIdAndRemove(DIYId);
+    
+                // Remove the DIY from the user's DIYs array
+                await User.findByIdAndUpdate(context.user._id, {
+                  $pull: { DIYs: DIYId },
+                });
+    
+                return DIYToRemove;
+              } else {
+                throw new AuthenticationError(
+                  'You are not authorized to remove this DIY.'
+                );
+              }
             }
+            throw new AuthenticationError('You need to be logged in to remove a DIY.');
+          } catch (error) {
+            throw new UserInputError('Failed to remove the DIY.', {
+              errors: error.errors,
+            });
+          }
+        },
 
-            throw new AuthenticationError('You need to be logged in!');
-        },    
+        removeSavedDIY: async (parent, { DIYId }, context) => {
+          try {
+            if (context.user) {
+              // Find the DIY to be removed from savedDIYs
+              const DIYToRemove = await DIY.findById(DIYId);
+    
+              if (!DIYToRemove) {
+                throw new Error('DIY not found');
+              }
+    
+              // Check if the user has saved the DIY
+              const user = await User.findById(context.user._id);
+              const hasSavedDIY = user.savedDIYs.includes(DIYId);
+    
+              if (!hasSavedDIY) {
+                throw new Error('DIY is not saved by the user');
+              }
+    
+              // Remove the DIY from the user's savedDIYs array
+              await User.findByIdAndUpdate(context.user._id, {
+                $pull: { savedDIYs: DIYId },
+              });
+    
+              return DIYToRemove;
+            }
+            throw new AuthenticationError('You need to be logged in to remove a saved DIY.');
+          } catch (error) {
+            throw new Error(`Failed to remove the saved DIY: ${error.message}`);
+          }
+        },
+
         addLike: async (parent, args, context) => {
           if (context.user) {
             const { DIYId } = args;
@@ -336,6 +381,26 @@ const resolvers = {
           }
         
           throw new AuthenticationError('You need to be logged in!');
+        },
+
+        uploadDIYImage: async (_, { file, DIYId }) => { 
+          try {
+            const { createReadStream, filename } = await file; // Destructure the file object returned from the client
+            const stream = createReadStream();
+            const urlPath = await storeUpload({ stream, filename });
+    
+            // Update the DIY document's images field with the URL path
+            const updatedDIY = await DIY.findByIdAndUpdate(
+              DIYId,
+              { $push: { images: urlPath } },
+              { new: true }
+            );
+    
+            return { filename, urlPath, updatedDIY };
+          } catch (error) {
+            console.error(error);
+            throw new Error('Failed to upload DIY image.');
+          }
         },
     },
 };

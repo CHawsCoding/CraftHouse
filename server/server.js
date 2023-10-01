@@ -1,6 +1,8 @@
 const dotenv = require('dotenv').config();
 const express = require('express');
 const path = require('path');
+
+// const fileUpload = require('./utils/fileUpload');
 const multer = require('multer');
 
 //connect to the database
@@ -18,14 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // Set up Multer middleware for file uploads
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Specify the destination folder where uploaded files will be stored
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname); // Define the file naming convention
-  }
-});
+const storage = multer.memoryStorage();
 
 const upload = multer({ storage: storage });
 
@@ -40,7 +35,6 @@ if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
   });
-  
 
 const server = new ApolloServer({
     typeDefs,

@@ -29,7 +29,7 @@ export const ADD_DIY = gql`
     $title: String!
     $description: String!
     $materialsUsed: [String]
-    $instructions: String!
+    $instructions: [String]
     $images: [String]) 
     {
     addDIY(
@@ -105,7 +105,7 @@ export const REMOVE_DIY = gql`
         removeDIY(DIYId: $DIYId) {
             _id
             username
-            savedDIYs {
+            DIYs {
                 _id
                 title
                 description
@@ -116,6 +116,24 @@ export const REMOVE_DIY = gql`
         }
     }
 `;
+
+export const REMOVE_SAVED_DIY = gql`
+mutation removeSavedDIY($DIYId: ID!) {
+  removeSavedDIY(DIYId: $DIYId) {
+    _id
+    username
+    savedDIYs {
+      _id
+      title
+      description
+      materialsUsed
+      instructions
+      images
+    }
+  }
+}
+`;
+
 export const ADD_LIKE = gql`
   mutation AddLike($DIYId: ID!) {
     addLike(DIYId: $DIYId) {
@@ -135,6 +153,15 @@ export const REMOVE_LIKE = gql`
       user {
         _id
       }
+    }
+  }
+`;
+
+export const UPLOAD_DIY_IMAGE = gql`
+  mutation UploadDIYImage($file: Upload!, $DIYId: ID!) {
+    uploadDIYImage(file: $file, DIYId: $DIYId) {
+      filename
+      urlPath
     }
   }
 `;

@@ -16,10 +16,12 @@ const diySchema = new mongoose.Schema(
         required: true,
       },
     ],
-    instructions: {
+    instructions: [
+      {
       type: String,
       required: true,
     },
+  ],
     images: [String],
     user: {
       type: mongoose.Schema.Types.ObjectId,

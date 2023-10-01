@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Auth from '../utils/auth';
 
 import { VscBellDot } from 'react-icons/vsc';
- import logo from '../images/logo.png';
+import logo from '../images/logo.png';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation(); 
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -15,7 +16,7 @@ function Navbar() {
   const closeMenu = () => {
     setIsOpen(false);
   };
-  
+
   const logout = () => {
     Auth.logout();
   };
@@ -24,20 +25,19 @@ function Navbar() {
     <nav className='flex justify-between items-center p-4'>
       <img src={logo} alt='logo' className='w-10' />
       <div className='hidden md:flex space-x-4'>
-        <Link to='/'>Home</Link>
+        <Link to='/' className={location.pathname === '/' ? 'text-yellow-500' : ''}>Home</Link> 
         {Auth.loggedIn() ? (
           <>
-           <Link to='/explore'>Explore</Link>
-            <Link to='/create'>Create</Link>
-            <Link to='/profile'>Profile</Link>
+            <Link to='/explore' className={location.pathname === '/explore' ? 'text-yellow-500' : ''}>Explore</Link> 
+            <Link to='/create' className={location.pathname === '/create' ? 'text-yellow-500' : ''}>Create</Link> 
+            <Link to='/profile' className={location.pathname === '/profile' ? 'text-yellow-500' : ''}>Profile</Link> 
             <button onClick={logout}>Logout</button>
             <VscBellDot className='text-pink-600 hover:animate-bounce' />
           </>
         ) : (
           <>
-            <Link to='/explore'>Explore</Link>
-            <Link to='/login'>Login</Link>
-            
+            <Link to='/explore' className={location.pathname === '/explore' ? 'text-yellow-500' : ''}>Explore</Link> 
+            <Link to='/login' className={location.pathname === '/login' ? 'text-yellow-500' : ''}>Login</Link> 
           </>
         )}
       </div>
@@ -63,7 +63,6 @@ function Navbar() {
                 <Link to='/profile' onClick={closeMenu} className='mb-4'>
                   Profile
                 </Link>
-
                 <button onClick={() => { logout(); closeMenu(); }}>Logout</button>
               </>
             ) : (
