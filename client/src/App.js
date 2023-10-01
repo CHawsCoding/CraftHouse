@@ -8,14 +8,12 @@ import Signup from './pages/Signup';
 import Profile from './pages/Profile';
 import Create from './pages/Create';
 import Explore from './pages/Explore';
-
 import Footer from './components/Footer';
 import SearchBar from './components/searchBar';
 import DIYDetail from './components/DIYDetail';
 
 import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -36,21 +34,25 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+// Define primary color for use in components
+const primaryColor = '#0A0503';
+
 function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div className="bg-black w-full overflow-hidden text-pink-100">
-          <Navbar />          
+        <div style={{ backgroundColor: primaryColor }} className="w-full overflow-hidden text-pink-100">
+          <Navbar />
           <SearchBar />
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/Create" element={ <Create /> } />
-            <Route path="/explore" element={<Explore />} />
-            <Route path="/diy/:id" element={<DIYDetail />} />
+            {/* Passing the primaryColor prop to components */}
+            <Route path="/" element={<Home primaryColor={primaryColor} />} />
+            <Route path="/login" element={<Login primaryColor={primaryColor} />} />
+            <Route path="/signup" element={<Signup primaryColor={primaryColor} />} />
+            <Route path="/profile" element={<Profile primaryColor={primaryColor} />} />
+            <Route path="/Create" element={<Create primaryColor={primaryColor} />} />
+            <Route path="/explore" element={<Explore primaryColor={primaryColor} />} />
+            <Route path="/diy/:id" element={<DIYDetail primaryColor={primaryColor} />} />
           </Routes>
           <Footer />
         </div>

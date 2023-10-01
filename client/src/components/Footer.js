@@ -5,14 +5,14 @@ function Footer() {
   return (
     <footer className="bg-black text-pink-100">
       <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-wrap -mx-4 justify-between border-t border-pink-600 pt-8">
+        <div className="flex flex-wrap -mx-4 justify-between border-t border-yellow-600 pt-8">
           <div className="w-full lg:w-1/3 px-4">
             <div className="mb-8">
               <h2 className="text-2xl font-bold mb-4">Connect with Us</h2>
               <div className="flex items-center">
-                <FaFacebook className="mr-2 text-pink-500 hover:text-pink-600" size={24} />
-                <FaTwitter className="mr-2 text-pink-500 hover:text-pink-600" size={24} />
-                <FaInstagram className="text-pink-500 hover:text-pink-600" size={24} />
+                <FaFacebook className="mr-2 text-yellow-500 hover:text-yellow-600" size={24} />
+                <FaTwitter className="mr-2 text-yellow-500 hover:text-yellow-600" size={24} />
+                <FaInstagram className="text-yellow-500 hover:text-yellow-600" size={24} />
               </div>
             </div>
             <div className="mb-8">
@@ -38,7 +38,7 @@ function Footer() {
                 className="w-full px-3 py-2 mt-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500"
               />
               <button
-                className="w-full mt-4 py-2 px-4 bg-pink-500 hover:bg-pink-600 text-white rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                className="w-full mt-4 py-2 px-4 bg-yellow-500 hover:bg-yellow-600 text-white rounded-md focus:outline-none "
               >
                 Subscribe us
               </button>
