@@ -105,7 +105,7 @@ export const REMOVE_DIY = gql`
         removeDIY(DIYId: $DIYId) {
             _id
             username
-            savedDIYs {
+            DIYs {
                 _id
                 title
                 description
@@ -116,6 +116,24 @@ export const REMOVE_DIY = gql`
         }
     }
 `;
+
+export const REMOVE_SAVED_DIY = gql`
+mutation removeSavedDIY($DIYId: ID!) {
+  removeSavedDIY(DIYId: $DIYId) {
+    _id
+    username
+    savedDIYs {
+      _id
+      title
+      description
+      materialsUsed
+      instructions
+      images
+    }
+  }
+}
+`;
+
 export const ADD_LIKE = gql`
   mutation AddLike($DIYId: ID!) {
     addLike(DIYId: $DIYId) {
