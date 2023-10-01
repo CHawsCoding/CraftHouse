@@ -30,6 +30,7 @@ type Mutation {
     removeDIY(DIYId: ID!): User
     removeComment(commentId: ID!): DIY
     removeLike(DIYId: ID!): DIY
+    removeSavedDIY(DIYId: ID!): User
 
     uploadDIYImage(file: Upload!, DIYId: ID!): File!
 
