@@ -5,6 +5,7 @@ import { GET_COMMENTS } from '../utils/queries';
 function Comments({ DIYId }) {
   const { loading, error, data } = useQuery(GET_COMMENTS, {
     variables: { DIYId },
+    refetchQueries: [{ query: GET_COMMENTS, variables: { DIYId } }],
   });
 
   // State variables to track displayed comments and whether the modal is open

@@ -5,6 +5,7 @@ import { GET_LIKED_USERS } from '../utils/queries';
 function Likes({ DIYId }) {
   const { loading, error, data } = useQuery(GET_LIKED_USERS, {
     variables: { DIYId },
+    refetchQueries: [{ query: GET_LIKED_USERS, variables: { DIYId } }],
   });
 
   if (loading) return <div className="text-center py-8">Loading...</div>;
