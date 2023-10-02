@@ -6,13 +6,13 @@ import { SEARCH_DIYS } from '../utils/queries'; // Import your GraphQL query
 import { Link } from 'react-router-dom';
 
 const SearchBar = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const { loading, data } = useQuery(SEARCH_DIYS, {
+  const [searchTerm, setSearchTerm] = useState(''); // Create state for holding search term
+  const { loading, data } = useQuery(SEARCH_DIYS, { // Use useQuery hook to make query request
     variables: { searchTerm },
     skip: !searchTerm,
   });
 
-  const handleChange = (event) => {
+  const handleChange = (event) => { 
     setSearchTerm(event.target.value);
   };
 

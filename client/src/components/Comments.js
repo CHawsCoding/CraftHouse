@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_COMMENTS } from '../utils/queries';
 
+import { GiNothingToSay } from 'react-icons/gi';
+
 
 function Comments({ DIYId }) {
   const { loading, error, data } = useQuery(GET_COMMENTS, {
@@ -31,9 +33,12 @@ function Comments({ DIYId }) {
     <div className="mt-4">
       {comments.length > 0 && (
         <div className="mb-2 ml-2">
-          <p className="text-gray-600 text-sm">Comments</p>
-          <p className="font-semibold text-yellow-700 text-xs">{comments[0].user.username}</p>
-          <p className="text-gray-200 bg-gray-700 p-4 rounded ">{comments[0].content}</p>
+          {/* user name and comment icons section */}
+          <div className='flex justify-between'>
+          <p className="font-semibold text-gray-600 text-xs">{comments[0].user.username}</p>
+          <GiNothingToSay size={18} className='text-gray-700'/> 
+          </div>
+          <p className="text-gray-500 bg-slate-800 p-4 rounded ">{comments[0].content}</p>
         </div>
       )}
 
