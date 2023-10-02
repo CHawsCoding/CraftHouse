@@ -46,18 +46,17 @@ function Profile() {
           <div className="border-b border-t m-5 p-2 border-gray-500">
             <h3 className="text-3xl font-semibold text-yellow-500 text-center">My DIYs</h3>
           </div>
-          {user.DIYs.length === 0 ? ( // Check if the user has no DIY items
+          {user.DIYs.length === 0 ? (
             <p className="text-center text-gray-500 mt-4">No DIYs yet.</p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-4">
               {user.DIYs.map((diy) => (
-                <div key={diy._id} className="bg-bl border rounded-lg shadow-md overflow-hidden">
-                  <img src={diy.images[0]} alt="my DIY" className="object-cover min-w-full" />
+                <div key={diy._id} className="bg-bl border rounded-lg shadow-md overflow-hidden" style={{ width: '100%', height: '100%' }}>
+                  <img src={diy.images[0]} alt="my DIY" className="object-cover w-full h-40" />
                   <div className="p-4">
                     <h4 className="text-lg font-semibold">{diy.title}</h4>
                   </div>
                   <div className="flex justify-between p-4 border-t border-gray-300">
-                    {/* View DIY */}
                     <Link to={`/diy/${diy._id}`} className="block p-4 hover:bg-gray-900">
                       <SiQuicklook size={24} className="text-green-700" />
                     </Link>

@@ -31,14 +31,14 @@ function SavedDIY({ userId }) {
       <div className="border-b border-t m-5 p-2 border-gray-500">
         <h3 className="text-3xl font-semibold text-yellow-500 text-center">My Saved DIYs</h3>
       </div>
-      {savedDIYs.length === 0 ? ( // Check if there are no saved DIYs
+      {savedDIYs.length === 0 ? (
         <p className="text-center text-gray-500 mt-4">No saved DIYs yet.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-6 mt-4 ml-4 mr-4">
           {savedDIYs.map((diy) => (
             <div
               key={diy._id}
-              className="border rounded-lg shadow-md overflow-hidden"
+              className="border rounded-lg shadow-md overflow-hidden" style={{ width: '100%', height: '100%' }}
             >
               {/* DIY content */}
               <div className="p-4">
@@ -49,7 +49,7 @@ function SavedDIY({ userId }) {
                 <img
                   src={diy.images[0]}
                   alt="DIY"
-                  className="object-cover w-full"
+                  className="object-cover w-full h-40" // Set the image height to a fixed value (adjust as needed)
                 />
               </div>
               {/* View DIY */}
