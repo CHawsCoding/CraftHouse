@@ -35,7 +35,7 @@ const client = new ApolloClient({
 });
 
 // Define primary color for use in components
-const primaryColor = '#0A0503';
+const primaryColor = '#000814';
 
 function App() {
   return (
