@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 
 import landing from '../images/landing.jpg';
 import DIY from '../images/DIY.jpg';
@@ -49,6 +51,7 @@ function Hero() {
             src={landing}
             alt="Big Image"
             className="w-full h-auto object-cover"
+            style={{ borderRadius: '50%' }}
           />
         </div>
 
@@ -82,13 +85,15 @@ function Hero() {
 
       </section>      
       <section className="popular-diy-section bg-pink-100 py-12 mt-6">
-        <div className="container mx-auto">
-          <h2 className="text-3xl text-black font-semibold text-center mb-6">Popular DIYs</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* letsAdd popular DIYs here */}
-          </div>
+      <div className="container mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Add content within the Link component */}
+          <Link to="/explore" className="text-3xl text-black font-semibold text-center mb-6">
+            <p>Click here to explore popular DIYs</p>
+          </Link>
         </div>
-      </section>
+      </div>
+    </section>
 
     </div>
   );
