@@ -81,6 +81,7 @@ function Explore({ primaryColor }) {
     }
   };
 
+  
   const handleSave = async (id) => {
     try {
       const { data } = await saveDIYMutation({
@@ -99,31 +100,30 @@ function Explore({ primaryColor }) {
         <h2 className="text-3xl font-semibold text-center mb-8 text-yellow-600">Explore DIYs</h2>
         <div className="grid grid-cols-1 mr-5 ml-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {DIYs.map((DIY, index) => (
-            <div key={DIY._id} className="bg-gray-900 border border-gray-300 rounded-lg shadow-md transition transform duration-300 hover:scale-105 overflow-hidden">
+            <div key={DIY._id} className="bg-gray-900 border-2 border-gray-800 rounded-lg shadow-lg transition transform duration-300 hover:scale-105 overflow-hidden">
               {DIY.images && DIY.images.length > 0 && (
                 <img
                   src={DIY.images[0]}
                   alt={DIY.title}
-                  className="w-1/2 object-cover mx-auto"
-                />
+                  className="w-1/2 object-fit mx-auto"/>
               )}
               <div className="p-6 border-t">              
                   <h3 className="text-xl text-gray-500 font-semibold mb-2 text-center underline">{DIY.title}</h3>
               </div>
               <div className="text-center p-4">               
-                  <p className="text-gray-400">{DIY.description}</p>
+                  <p className="text-gray-300">{DIY.description}</p>
                 <Link to={`/diy/${DIY._id}`} className="block p-4 hover:bg-gray-900">
                   <h3 className="text-lg text-yellow-500 hover:text-yellow-600 font-semibold mb-2 text-center underline">Learn More</h3>
                 </Link>
               </div>
-              <div className='flex flex-auto border-b border-gray-500'>
+              <div className='flex flex-auto border-b border-gray-800'>
                 <Likes DIYId={DIY._id} />
               </div>
 
               {/* users interaction section */}
               <div className="flex justify-between px-6 py-4">
                 <SlLike size={24} className="text-white-600 hover:text-yellow-500 hover:scale-125 cursor-pointer" onClick={() => handleLike(DIY._id)}/>
-                <SlDislike size={24} className="text-white-600 hover:text-yellow-500 hover:scale-125 cursor-pointer" onClick={() => handleDislike(DIY._id)}/>
+                <SlDislike size={24} className="text-white-600 hover:text-red-500 hover:scale-125 cursor-pointer" onClick={() => handleDislike(DIY._id)}/>
                 <HiOutlineSaveAs size={24} className="text-white-600 hover:text-yellow-500 hover:scale-125 cursor-pointer" onClick={() => handleSave(DIY._id)}/>
               </div>
 
@@ -133,7 +133,7 @@ function Explore({ primaryColor }) {
                   <input
                     type="text"
                     placeholder="Add a comment..."
-                    className="text-yellow-50 p-2 w-full bg-slate-500"
+                    className="text-yellow-50 p-2 w-full bg-slate-600"
                     name="commentInput"
                     onClick={
                       () => {
