@@ -86,9 +86,9 @@ function Hero() {
       </section>      
       <section className="popular-diy-section bg-pink-100 py-12 mt-6">
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div>
           {/* Add content within the Link component */}
-          <Link to="/explore" className="text-3xl text-black font-semibold text-center mb-6">
+          <Link to="/explore" className="text-3xl text-black font-semibold flex justify-center items-center mb-6">
             <p>Click here to explore popular DIYs</p>
           </Link>
         </div>
