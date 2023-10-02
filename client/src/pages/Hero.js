@@ -57,11 +57,12 @@ function Hero() {
 
         {/* Text Content on the Left */}
         <div className="w-full md:w-1/2 md:pl-10">
-          <h1 className="lg:text-7xl md:text-5xl sm:text-3xl text-yellow-500 text-center font-bold">Welcome to CraftHouse!</h1>
-          <p className="lg:text-3xl text-center md:text-2xl">
+          <h1 className="lg:text-7xl md:text-5xl sm:text-3xl text-yellow-500 text-center font-bold mb-4">Welcome to CraftHouse!</h1>
+
+          <p className="lg:text-3xl text-center md:text-2xl mb-4">
             Join the Community and Start sharing your creative DIY ideas today!
           </p>
-          <p className="text-yellow-500 text-center lg:text-2xl">
+          <p className="text-yellow-500 text-center lg:text-2xl mb-4">
            Interact with other DIYers and spread the inspiration!
           </p>
           {/* Add more text content as needed */}
