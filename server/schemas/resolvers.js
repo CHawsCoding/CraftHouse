@@ -191,6 +191,8 @@ const resolvers = {
               .populate('user')
               .populate('comments')
               .exec();
+
+              // pubsub.publish('NEW_DIY', { newDIY: populatedDIY });
         
             return populatedDIY;
           }
@@ -216,6 +218,9 @@ const resolvers = {
 
                   // Populate the new comment and return it
                   const populatedComment = await Comment.findById(newComment._id).populate('user').exec();
+
+                  //publish the new event
+                  // pubsub.publish(`NEW_COMMENT_${DIYId}`, { newComment: populatedComment });
 
                   return populatedComment;
               }
@@ -348,7 +353,9 @@ const resolvers = {
               { _id: context.user._id },
               { $addToSet: { likes: newLike._id } }
             );
-        
+            //publish the new event
+            // pubsub.publish(`NEW_LIKE_${DIYId}`, { newLike: newLike });
+
             return await DIY.findById(DIYId).populate('likes');
           }
         
@@ -403,6 +410,24 @@ const resolvers = {
           }
         },
     },
+    //Subscription which will be used to notify the client when a new DIY is created/ or instant update
+    // Subscription: {
+    //   newDIY: {
+    //     subscribe: (_, __, { pubsub }) => {
+    //       return pubsub.asyncIterator('NEW_DIY');
+    //     },
+    //   },
+    //   newComment: {
+    //     subscribe: (_, { DIYId }, { pubsub }) => {
+    //       return pubsub.asyncIterator(`NEW_COMMENT_${DIYId}`);
+    //     },
+    //   },
+    //   newLike: {
+    //     subscribe: (_, { DIYId }, { pubsub }) => {
+    //       return pubsub.asyncIterator(`NEW_LIKE_${DIYId}`);
+    //     },
+    //   },
+    //   },
 };
 
 module.exports = resolvers;
