@@ -104,71 +104,75 @@ const DIYDetail = () => {
   };
 
   return (
-    <div className="min-h-screen border-white py-12">
-      <div className="max-w-3xl mx-auto p-6 rounded-lg shadow-lg">
-        <div className="flex flex-col items-center">
-          <h2 className="text-3xl font-semibold text-yellow-500 mt-4 mb-4 underline">
-            {diy.title}
-          </h2>
+    <div className="container mx-auto bg-slate-950 py-12 m-5">
+      <div className="max-w-6xl mx-auto p-6 rounded-lg bg-gray-900 shadow-xlg">
+        <h2 className="text-4xl text-center font-semibold text-yellow-500 mb-4">
+          {diy.title}
+        </h2>
+        <div className="flex justify-center border border-gray-700 rounded ">
           {/* Render the image at the top and centered */}
           <img
-            src={diy.images[0]} alt={`${diy.title} image`} className="w-2/4 rounded-lg border shadow-md"/>
+            src={diy.images[0]} alt={`${diy.title} image`} className="w-full max-w-lg rounded-lg shadow-lg"/>
         </div>
 
-        <table className="table-auto w-full mt-8 border">
-          <tbody>
-            <tr className="border-b-2 border-gray-400">
-              <td className="text-yellow-500 font-semibold text-2xl border-r-2 border-gray-400 pr-4">Description</td>
-              <td className="text-gray-400">{diy.description}</td>
-            </tr>
-            <tr className="border-b-2 border--400">
-              <td className="text-yellow-500 font-semibold text-2xl border-r-2 border-gray-400 pr-4">Materials</td>
-              <td className="text-gray-400">
-                <ul className="list-disc list-inside">
-                  {diy.materialsUsed.map((material, index) => (
-                    <li className='border p-2' key={index}>{material}</li>
-                  ))}
-                </ul>
-              </td>
-            </tr>
-            <tr className="border-b-2 border-gray-400">
-              <td className="text-yellow-500 font-semibold text-2xl border-r-2 border-gray-400 pr-4">Instructions</td>
-              <td className="text-gray-400">
-                <ol className="list-decimal list-inside">
-                  {diy.instructions.map((instruction, index) => (
-                    <li className='border p-2' key={index}>{instruction}</li>
-                  ))}
-                </ol>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="mt-6">
+          <h3 className="text-2xl font-semibold text-gray-300 mb-2 p-2">Description</h3>
+          <p className="text-gray-400">{diy.description}</p>
+        </div>
 
-        <div className="flex justify-between px-6 py-4 mt-5 border-b border-gray-200">
-          <SlLike size={24} className="text-white hover:text-yellow-500 hover:scale-125 cursor-pointer" onClick={() => handleLike(diy._id)}/>
-                <SlDislike size={24} className="text-white hover:text-yellow-500 hover:scale-125 cursor-pointer" onClick={() => handleDislike(diy._id)}/>
-                <HiOutlineSaveAs size={24} className="text-white hover:text-yellow-500 hover:scale-125 cursor-pointer" onClick={() => handleSave(diy._id)}/>
+        <div className="mt-6">
+          <h3 className="text-2xl font-semibold text-gray-300 mb-2 p-2">Materials</h3>
+          <ul className="list-disc list-inside text-gray-400">
+            {diy.materialsUsed.map((material, index) => (
+              <li className="mb-2 p-1" key={index}>
+                {material}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="mt-6">
+          <h3 className="text-2xl font-semibold text-gray-300 mb-2 p-2">Instructions</h3>
+          <ol className="list-decimal list-inside text-gray-400 p-3">
+            {diy.instructions.map((instruction, index) => (
+              <li className="mb-2 p-1" key={index}>
+                {instruction}
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <div className="flex justify-between mt-8">
+          <div className="flex space-x-4">
+            <SlLike
+              size={24}
+              className="text-yellow-500 cursor-pointer hover:text-yellow-600" onClick={() => handleLike(diy._id)} />
+            <SlDislike
+              size={24}
+              className="text-red-500 cursor-pointer hover:text-red-600" onClick={() => handleDislike(diy._id)} />
+            <HiOutlineSaveAs
+              size={24}
+              className={`cursor-pointer ${ isSaved ? 'text-green-500' : 'text-gray-400' } hover:text-green-600`} onClick={() => handleSave(diy._id)}/>
           </div>
-
           <Likes DIYId={diy._id} />
+        </div>
 
-          <div className="relative">
-          <form className="mt-4"  onSubmit={(e) => handleComment(e, diy._id)}>
-            <textarea name="commentInput"
-              className="w-full h-16 px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-              placeholder="Write your comment here..."/>
-            <button type="submit" className="absolute right-1 top-1/2 -translate-y-1/2 p-4 bg-white hover:scale-125 rounded-full cursor-pointer">
-            <FaRegComment className="text-pink-600" />
-            </button> 
+        <div className="mt-8 relative">
+          <h3 className="text-xl font-semibold text-gray-200">Comments</h3>
+          <form onSubmit={(e) => handleComment(e, diy._id)} className="mt-4">
+            <textarea
+              name="commentInput"
+              className="w-full h-20 px-3 py-2 border text-gray-500 rounded-md focus:outline-none focus:border-yellow-500"
+              placeholder="Write your comment here..." />
+            <button
+              type="submit"
+              className="absolute right-4 top-2/3 -translate-y-1/2 p-3 bg-white rounded-full hover:scale-105 hover:bg-gray-100 focus:outline-none">
+              <FaRegComment size={24} className="text-pink-600" />
+            </button>
           </form>
         </div>
 
-        
-
-        <div className="mt-8">
-          <h3 className="text-xl font-semibold text-gray-400">Comments</h3>
-          <Comments DIYId={diy._id} comments={comments[diy._id]} />
-        </div>
+        <Comments DIYId={diy._id} comments={comments[diy._id]} />
       </div>
     </div>
   );

@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import { GET_ME } from '../utils/queries';
 import { REMOVE_DIY } from '../utils/mutations';
 
+import { RiDeleteBin5Fill } from 'react-icons/ri';
+import { SiQuicklook } from 'react-icons/si';
+
 import profile from '../images/profile.png';
 import SavedDIY from './savedDIY';
 
@@ -43,28 +46,32 @@ function Profile() {
           <div className="border-b border-t m-5 p-2 border-gray-500">
             <h3 className="text-3xl font-semibold text-yellow-500 text-center">My DIYs</h3>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-4">
-            {user.DIYs.map((diy) => (
-              <div key={diy._id} className="bg-bl border rounded-lg shadow-md overflow-hidden">
-                <img src={diy.images[0]} alt="my DIY" className="object-cover min-w-full" />
-                <div className="p-4">
-                  <h4 className="text-lg font-semibold">{diy.title}</h4>
+          {user.DIYs.length === 0 ? ( // Check if the user has no DIY items
+            <p className="text-center text-gray-500 mt-4">No DIYs yet.</p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-4">
+              {user.DIYs.map((diy) => (
+                <div key={diy._id} className="bg-bl border rounded-lg shadow-md overflow-hidden">
+                  <img src={diy.images[0]} alt="my DIY" className="object-cover min-w-full" />
+                  <div className="p-4">
+                    <h4 className="text-lg font-semibold">{diy.title}</h4>
+                  </div>
+                  <div className="flex justify-between p-4 border-t border-gray-300">
+                    {/* View DIY */}
+                    <Link to={`/diy/${diy._id}`} className="block p-4 hover:bg-gray-900">
+                      <SiQuicklook size={24} className="text-green-700" />
+                    </Link>
+                    <button
+                      className="block p-4 hover:bg-gray-900"
+                      onClick={() => handleDeleteDIY(diy._id)}
+                    >
+                      <RiDeleteBin5Fill size={24} className="text-red-900" />
+                    </button>
+                  </div>
                 </div>
-                <div className="flex justify-between p-4 border-t border-gray-300">
-             {/* View DIY */}
-                  <Link to={`/diy/${diy._id}`} className="block p-4 hover:bg-gray-900">
-                    <h3 className="text-lg text-green-500 hover:text-green-600 font-semibold mb-2 text-center underline">View</h3>
-                  </Link>
-                  <button
-                    className="text-red-500 hover:text-red-600"
-                    onClick={() => handleDeleteDIY(diy._id)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
       <div className="mt-8">

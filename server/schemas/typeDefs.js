@@ -36,6 +36,12 @@ type Mutation {
 
 }
 
+type Subscription {
+    newDIY: DIY
+    newComment(DIYId: ID!): Comment
+    newLike(DIYId: ID!): Like
+}
+
 type Auth {
     token: ID!
     user: User

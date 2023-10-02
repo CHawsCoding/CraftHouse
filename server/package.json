@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
-  "engines": {
-    "node": "14.x"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
@@ -15,15 +12,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "apollo-server": "^3.12.1",
+    "apollo-server-express": "^3.12.1",
     "bcrypt": "^5.0.0",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "graphql": "^16.3.0",
+    "graphql": "^16.8.1",
+    "graphql-subscriptions": "^2.0.0",
     "graphql-upload": "^16.0.2",
+    "http": "^0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^7.0.2",
-    "multer": "^1.4.5-lts.1"
+    "multer": "^1.4.5-lts.1",
+    "subscriptions-transport-ws": "^0.11.0"
   }
 }
