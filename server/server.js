@@ -2,7 +2,6 @@ const dotenv = require('dotenv').config();
 const express = require('express');
 const path = require('path');
 
-// const fileUpload = require('./utils/fileUpload');
 const multer = require('multer');
 
 //connect to the database
@@ -17,12 +16,22 @@ const { typeDefs, resolvers } = require('./schemas');
 const { authMiddleware } = require('./utils/auth');
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(express.json({ limit: '5mb' }));
 
 // Set up Multer middleware for file uploads
-const storage = multer.memoryStorage();
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, '../client/public/uploads');
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname); // Use the original filename for the uploaded file
+  },
+});
 
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // set the file size limit to 5 MB
+});
 
 // Use the Multer middleware to handle single file uploads
 app.use(upload.single('file'));
@@ -36,6 +45,7 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
   });
 
+  //create a new Apollo server and pass in schema data
 const server = new ApolloServer({
     typeDefs,
     resolvers,
@@ -45,11 +55,13 @@ const server = new ApolloServer({
     },
   });
 
+  //integrate Apollo server with Express application as middleware
   const startApolloServer = async () => {
     await server.start();
     server.applyMiddleware({ app });
   };
 
+  //start the Apollo server
   startApolloServer();
 
 app.listen(PORT, () => {
