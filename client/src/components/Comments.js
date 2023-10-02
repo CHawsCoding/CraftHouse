@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_COMMENTS } from '../utils/queries';
 
+
 function Comments({ DIYId }) {
   const { loading, error, data } = useQuery(GET_COMMENTS, {
     variables: { DIYId },
@@ -30,13 +31,14 @@ function Comments({ DIYId }) {
     <div className="mt-4">
       {comments.length > 0 && (
         <div className="mb-2 ml-2">
-          <p className="font-semibold text-indigo-700">{comments[0].user.username}</p>
-          <p className="text-gray-200">{comments[0].content}</p>
+          <p className="text-gray-600 text-sm">Comments</p>
+          <p className="font-semibold text-yellow-700 text-xs">{comments[0].user.username}</p>
+          <p className="text-gray-200 bg-gray-700 p-4 rounded ">{comments[0].content}</p>
         </div>
       )}
 
       {comments.length > 1 && (
-        <button onClick={openModal} className="text-yellow-500 cursor-pointer">
+        <button onClick={openModal} className="text-yellow-500 ml-2 cursor-pointer">
           View All Comments
         </button>
       )}
