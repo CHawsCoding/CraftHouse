@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 
 import landing from '../images/landing.jpg';
 import DIY from '../images/DIY.jpg';
@@ -49,16 +51,18 @@ function Hero() {
             src={landing}
             alt="Big Image"
             className="w-full h-auto object-cover"
+            style={{ borderRadius: '50%' }}
           />
         </div>
 
         {/* Text Content on the Left */}
         <div className="w-full md:w-1/2 md:pl-10">
-          <h1 className="lg:text-7xl md:text-5xl sm:text-3xl text-yellow-500 text-center font-bold">Welcome to CraftHouse!</h1>
-          <p className="lg:text-3xl text-center md:text-2xl">
+          <h1 className="lg:text-7xl md:text-5xl sm:text-3xl text-yellow-500 text-center font-bold mb-4">Welcome to CraftHouse!</h1>
+
+          <p className="lg:text-3xl text-center md:text-2xl mb-4">
             Join the Community and Start sharing your creative DIY ideas today!
           </p>
-          <p className="text-yellow-500 text-center lg:text-2xl">
+          <p className="text-yellow-500 text-center lg:text-2xl mb-4">
            Interact with other DIYers and spread the inspiration!
           </p>
           {/* Add more text content as needed */}
@@ -82,13 +86,15 @@ function Hero() {
 
       </section>      
       <section className="popular-diy-section bg-pink-100 py-12 mt-6">
-        <div className="container mx-auto">
-          <h2 className="text-3xl text-black font-semibold text-center mb-6">Popular DIYs</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* letsAdd popular DIYs here */}
-          </div>
+      <div className="container mx-auto">
+        <div>
+          {/* Add content within the Link component */}
+          <Link to="/explore" className="text-3xl text-black font-semibold flex justify-center items-center mb-6">
+            <p>Click here to explore popular DIYs</p>
+          </Link>
         </div>
-      </section>
+      </div>
+    </section>
 
     </div>
   );
