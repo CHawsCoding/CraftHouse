@@ -1,6 +1,8 @@
 import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'; //we use Link to navigate other pages
+
+// Import queries and mutations
 import { GET_SAVED_DIYS } from '../utils/queries';
 import { REMOVE_SAVED_DIY } from '../utils/mutations';
 
@@ -8,18 +10,19 @@ function SavedDIY({ userId }) {
   const { loading, error, data } = useQuery(GET_SAVED_DIYS, {
     variables: { userId },
   });
-  const [removeSavedDIYMutation] = useMutation(REMOVE_SAVED_DIY);
+  const [removeSavedDIYMutation] = useMutation(REMOVE_SAVED_DIY); // Mutation to remove a saved DIY
 
   if (loading) return <div className="text-center py-8">Loading...</div>;
   if (error) return <div className="text-center py-8">Error! {error.message}</div>;
 
   const savedDIYs = data.getSavedDIYs;
 
+  // Function to handle removing a saved DIY
   const handleRemoveSavedDIY = async (diyId) => {
     try {
-      await removeSavedDIYMutation({
-        variables: { DIYId: diyId },
-        refetchQueries: [{ query: GET_SAVED_DIYS, variables: { userId } }],
+      await removeSavedDIYMutation({ 
+        variables: { DIYId: diyId }, // Pass the DIY's id to the mutation
+        refetchQueries: [{ query: GET_SAVED_DIYS, variables: { userId } }], // Refetch the user data after deletion this makes the page update automatically
       });
     } catch (error) {
       console.error(error);
@@ -31,7 +34,7 @@ function SavedDIY({ userId }) {
       <div className="border-b border-t m-5 p-2 border-gray-500">
         <h3 className="text-3xl font-semibold text-yellow-500 text-center">My Saved DIYs</h3>
       </div>
-      {savedDIYs.length === 0 ? (
+      {savedDIYs.length === 0 ? ( // Check if there are no saved DIYs
         <p className="text-center text-gray-500 mt-4">No saved DIYs yet.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-6 mt-4 ml-4 mr-4">
@@ -49,7 +52,7 @@ function SavedDIY({ userId }) {
                 <img
                   src={diy.images[0]}
                   alt="DIY"
-                  className="object-cover w-full h-40" // Set the image height to a fixed value (adjust as needed)
+                  className="object-cover w-full h-40"
                 />
               </div>
               {/* View DIY */}
