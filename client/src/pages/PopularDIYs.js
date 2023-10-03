@@ -15,7 +15,9 @@ function PopularDIYs() {
 
   return (
     <div className="container mx-auto py-8">
-      <h1 className="text-3xl font-bold text-center text-yellow-500 mb-4 border border-yellow-500">Popular DIYs</h1>
+    <h1 className="text-3xl font-bold text-center text-yellow-500 mb-4 border border-yellow-500 rounded">Popular DIYs</h1>
+
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {popularDIYs.map((popularDIY) => (
           <div key={popularDIY._id} className="bg-white rounded-lg shadow-lg p-4 m-5 ">
