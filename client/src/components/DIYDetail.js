@@ -15,7 +15,7 @@ import { FaRegComment } from 'react-icons/fa';
 import { HiOutlineSaveAs } from 'react-icons/hi';
 
 import Likes from '../components/Likes';
-import Comments from '../components/Comments';
+import Comments from '../components/MainComments';
 
 const DIYDetail = () => {
   const [likes, setLikes] = useState({});
