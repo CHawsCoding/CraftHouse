@@ -1,9 +1,10 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "CH-DIY",
+  "name": "Craft House - a DIY community",
+  "description": "Craft House is a DIY community for people who love to make things.",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "diy.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
@@ -18,8 +19,8 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#000814",
+  "background_color": "#000000"
 }
