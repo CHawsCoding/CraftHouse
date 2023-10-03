@@ -1,5 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink, split } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+import { WebSocketLink } from '@apollo/client/link/ws'; // Import WebSocketLink
+import { getMainDefinition } from '@apollo/client/utilities';
 
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
@@ -11,9 +15,6 @@ import Explore from './pages/Explore';
 import Footer from './components/Footer';
 import SearchBar from './components/searchBar';
 import DIYDetail from './components/DIYDetail';
-
-import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -29,12 +30,46 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+// Create a WebSocket link for subscriptions
+const wsLink = new WebSocketLink({
+  uri: `ws://localhost:${3001}/graphql`,
+  options: {
+    reconnect: true, // Reconnect to the server in case of connection loss
+  },
+});
+
+//debugging purposes for websocket link
+console.log('WebSocket link:', wsLink);
+
+const wsClient = wsLink.subscriptionClient;
+wsClient.onConnected(() => {
+  console.log('WebSocket connection opened');
+});
+wsClient.onDisconnected(() => {
+  console.log('WebSocket connection closed');
+});
+wsClient.onError((error) => {
+  console.error('WebSocket error:', error);
+});
+
+// Use split to determine whether a request should be made over WebSocket or HTTP
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
+    );
+  },
+  wsLink,
+  authLink.concat(httpLink)
+);
+
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: splitLink,
   cache: new InMemoryCache(),
 });
 
-// Define primary color for use in components
 const primaryColor = '#000814';
 
 function App() {
@@ -45,7 +80,6 @@ function App() {
           <Navbar />
           <SearchBar />
           <Routes>
-            {/* Passing the primaryColor prop to components */}
             <Route path="/" element={<Home primaryColor={primaryColor} />} />
             <Route path="/login" element={<Login primaryColor={primaryColor} />} />
             <Route path="/signup" element={<Signup primaryColor={primaryColor} />} />
