@@ -3,8 +3,8 @@
 ![badge](https://img.shields.io/badge/license-MIT-brightgreen)<br>
 
 ## Description
-A full MERN stack single-page application!
-<!-- screenshot of application here -->
+A full MERN stack single-page application! Project 3
+![home-page](/assets/imgs/homepage.png "Home Page")
 
 ## Table of Contents
 - [Description](#description)
@@ -22,8 +22,10 @@ N/A
 1. type npm i in the CLI
 2. type npm run start in the CLI
 
+OR
+
 Live deployed application on Heroku:
-<!-- https://guarded-depths-74082-8f2fc31416d3.herokuapp.com/ -->
+https://craft-house-333df780d3f8.herokuapp.com/
 
 ## License
 ![badge](https://img.shields.io/badge/license-MIT-brightgreen)
