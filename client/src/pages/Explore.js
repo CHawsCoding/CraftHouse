@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { GET_ALL_DIYS} from '../utils/queries';
+import { GET_ALL_DIYS, GET_LIKED_USERS } from '../utils/queries';
 import { Link } from 'react-router-dom';
 import { ADD_COMMENT, ADD_LIKE, REMOVE_LIKE, SAVE_DIY } from '../utils/mutations';
 
-//import icons for users interaction section
+// Import icons for user interaction section
 import { SlLike } from 'react-icons/sl';
 import { SlDislike } from 'react-icons/sl';
 import { HiOutlineSaveAs } from 'react-icons/hi';
 
-//import components that serve fetching likes and comments from the database
+// Import components that serve fetching likes and comments from the database
 import Likes from '../components/Likes';
 import Comments from '../components/Comments';
 
 function Explore({ primaryColor }) {
   const { loading, error, data } = useQuery(GET_ALL_DIYS);
-  const [likes, setLikes] = useState({});
+
+  // Remove 'likes' and 'comments' state as they won't be needed
+  // const [likes, setLikes] = useState({});
   const [comments, setComments] = useState({});
-  // const [savedDIYs, setSavedDIYs] = useState([]);
 
   //mutations for likes, comments, and savedDIYs
   const [addLikeMutation] = useMutation(ADD_LIKE);
@@ -25,27 +26,28 @@ function Explore({ primaryColor }) {
   const [removeLikeMutation] = useMutation(REMOVE_LIKE);
   const [saveDIYMutation] = useMutation(SAVE_DIY);
 
-  //it will return a loading message if the data is still loading, an error message if there is an error, or the DIYs if the query is successful
+
   if (loading) return <div className="text-center py-8">Loading...</div>;
   if (error) return <div className="text-center py-8">Error! {error.message}</div>;
 
   //DIYs in the database
   const DIYs = data && data.DIYs ? data.DIYs : [];
 
-// a function to handle likes
+ // a function to handle likes
   const handleLike = async (id) => {
     try {
-      const { data } = await addLikeMutation({ // mutation to add a like
-        variables: { DIYId: id }, // pass the DIY's id to the mutation
-        refetchQueries: [{ query: GET_ALL_DIYS }],// refetch the GET_ALL_DIYS query to update the cache
+      await addLikeMutation({
+        variables: { DIYId: id },
+        update: (cache, { data }) => {
+          // Update the Apollo Client cache with the new data
+          const likedUsers = data.addLike.likes.map((like) => like.user);
+          cache.writeQuery({
+            query: GET_LIKED_USERS,
+            variables: { DIYId: id },
+            data: { getLikedUsers: likedUsers },
+          });
+        },
       });
-
-      // update the likes state variable with the DIY's updated likes
-      const updatedLikes = data.addLike.likes;
-      setLikes((prevLikes) => ({
-        ...prevLikes,
-        [id]: updatedLikes,
-      }));
     } catch (error) {
       console.error(error);
     }
@@ -54,21 +56,22 @@ function Explore({ primaryColor }) {
   // a function to handle dislikes
   const handleDislike = async (id) => {
     try {
-      const { data } = await removeLikeMutation({
+      await removeLikeMutation({
         variables: { DIYId: id },
-        refetchQueries: [{ query: GET_ALL_DIYS }],
+        update: (cache, { data }) => {
+          // Update the Apollo Client cache with the new data
+          const likedUsers = data.removeLike.likes.map((like) => like.user);
+          cache.writeQuery({
+            query: GET_LIKED_USERS,
+            variables: { DIYId: id },
+            data: { getLikedUsers: likedUsers },
+          });
+        },
       });
-  
-      const updatedLikes = data.removeLike.likes;
-      setLikes((prevLikes) => ({
-        ...prevLikes,
-        [id]: updatedLikes,
-      }));
     } catch (error) {
       console.error(error);
     }
   };
-
   // a function to handle comments
   const handleComment = async (e, id) => {
     e.preventDefault(); // Prevent the default form submission
@@ -113,7 +116,7 @@ function Explore({ primaryColor }) {
                 <img
                   src={DIY.images[0]}
                   alt={DIY.title}
-                  className="w-full h-40 object-cover" // Set the image to full width and specify the height (adjust as needed)
+                  className="w-full h-40 object-cover"
                 />
               )}
               <div className="p-6 border-t">

@@ -1,5 +1,4 @@
-import React from 'react';
-import { useQuery, useMutation } from '@apollo/client';
+import { useQuery, useMutation, useApolloClient } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import { GET_ME } from '../utils/queries';
 import { REMOVE_DIY } from '../utils/mutations';
@@ -13,17 +12,31 @@ import SavedDIY from './savedDIY';
 function Profile() {
   const { loading, error, data } = useQuery(GET_ME);
   const [deleteDIYMutation] = useMutation(REMOVE_DIY);
+  const client = useApolloClient(); // Access the Apollo Client instance
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error! {error.message}</div>;
 
-  const user = data.me; //user  is the logged in user and access the getMe query
+  const user = data.me;
 
   const handleDeleteDIY = async (diyId) => {
     try {
       await deleteDIYMutation({
         variables: { DIYId: diyId },
-        refetchQueries: [{ query: GET_ME }], // Refetch the user data after deletion
+      });
+
+      // Manually update the Apollo Client cache after deleting a DIY
+      const { me } = client.readQuery({ query: GET_ME });
+      const updatedDIYs = me.DIYs.filter((diy) => diy._id !== diyId);
+
+      client.writeQuery({
+        query: GET_ME,
+        data: {
+          me: {
+            ...me,
+            DIYs: updatedDIYs,
+          },
+        },
       });
     } catch (error) {
       console.error(error);
