@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_DIY } from '../utils/mutations';
+import { GET_ALL_DIYS } from '../utils/queries';
 
 function Create() {
   const [formState, setFormState] = useState({
@@ -11,7 +12,24 @@ function Create() {
     images: [],
   });
 
-  const [addDIY, { error }] = useMutation(ADD_DIY);
+  const [addDIY, { error }] = useMutation(ADD_DIY, {
+    // Update the cache to include the new DIY
+    update(cache, { data: { addDIY } }) {
+      try {
+        // Read what's currently in the cache
+        const { DIYs } = cache.readQuery({ query: GET_ALL_DIYS });
+
+        // Prepend the newest DIY to the front of the array
+        cache.writeQuery({
+          query: GET_ALL_DIYS,
+          data: { DIYs: [addDIY, ...DIYs] },
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    },
+  });
+
   const [successMessage, setSuccessMessage] = useState('');
 
   const handleInputChange = (event) => {

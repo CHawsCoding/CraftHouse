@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import PopularDIYs from './PopularDIYs';
 
 import landing from '../images/landing.jpg';
 import DIY from '../images/DIY.jpg';
@@ -85,13 +86,11 @@ function Hero() {
       </div>
 
       </section>      
-      <section className="popular-diy-section bg-pink-100 py-12 mt-6">
+      <section className="popular-diy-section  py-12 mt-6">
       <div className="container mx-auto">
         <div>
-          {/* Add content within the Link component */}
-          <Link to="/explore" className="text-3xl text-black font-semibold flex justify-center items-center mb-6">
-            <p>Click here to explore popular DIYs</p>
-          </Link>
+          {/* popular diys rendered here */}
+          <PopularDIYs />
         </div>
       </div>
     </section>

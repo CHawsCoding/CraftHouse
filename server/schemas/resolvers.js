@@ -1,6 +1,9 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User, DIY, Comment, Like } = require('../models');
 const { signToken } = require('../utils/auth');
+const { PubSub } = require('graphql-subscriptions');
+
+const pubsub = new PubSub();
 
 const resolvers = {
     Query: {
@@ -77,6 +80,40 @@ const resolvers = {
                 throw new Error('Unable to fetch DIYs data');
             }
         },
+        popular_DIYS: async () => {
+          try {
+            //  to get the top 8 DIYs with the most likes
+            const popularDIYs = await DIY.aggregate([
+              {
+                $lookup: {
+                  from: 'likes', 
+                  localField: '_id',
+                  foreignField: 'DIYId',
+                  as: 'likes',
+                },
+              },
+              {
+                $project: {
+                  _id: 1,
+                  title: 1,
+                  description: 1,
+                  images: 1,
+                  likes: { $size: '$likes' }, // Count the number of likes
+                },
+              },
+              {
+                $sort: { likes: -1 }, // Sort in descending order of likes
+              },
+              {
+                $limit: 8, // Limit the result to the top 5
+              },
+            ]);
+    
+            return popularDIYs;
+          } catch (error) {
+            throw new Error('Failed to fetch popular DIYs: ' + error.message);
+          }
+        },
         //search DIYs by title or description
         searchDIYs: async (parent, { searchTerm }) => {
             if (searchTerm) {
@@ -133,14 +170,14 @@ const resolvers = {
           //get all users who liked a DIY
           getLikedUsers: async (parent, { DIYId }) => {
             try {
-                const likes = await Like.find({ DIY: DIYId }).populate('user');
-                return likes.map((like) => like.user);
+                const likes = await Like.find({ DIY: DIYId }).sort({ createdAt: -1 }).populate('user');
+                const users = likes.map((like) => like.user);
+                return users;
             } catch (error) {
                 console.error('Error fetching liked users:', error);
                 throw new Error('Unable to fetch liked users');
             }
-        },
-          
+          },      
     },
     Mutation: {
         addUser: async (parent, { username, email, password }) => {
@@ -192,7 +229,7 @@ const resolvers = {
               .populate('comments')
               .exec();
 
-              // pubsub.publish('NEW_DIY', { newDIY: populatedDIY });
+              pubsub.publish('NEW_DIY', { newDIY: populatedDIY });
         
             return populatedDIY;
           }
@@ -220,7 +257,7 @@ const resolvers = {
                   const populatedComment = await Comment.findById(newComment._id).populate('user').exec();
 
                   //publish the new event
-                  // pubsub.publish(`NEW_COMMENT_${DIYId}`, { newComment: populatedComment });
+                  pubsub.publish(`NEW_COMMENT_${DIYId}`, { newComment: populatedComment });
 
                   return populatedComment;
               }
@@ -354,7 +391,7 @@ const resolvers = {
               { $addToSet: { likes: newLike._id } }
             );
             //publish the new event
-            // pubsub.publish(`NEW_LIKE_${DIYId}`, { newLike: newLike });
+            pubsub.publish(`NEW_LIKE_${DIYId}`, { newLike: newLike });
 
             return await DIY.findById(DIYId).populate('likes');
           }
@@ -411,23 +448,28 @@ const resolvers = {
         },
     },
     //Subscription which will be used to notify the client when a new DIY is created/ or instant update
-    // Subscription: {
-    //   newDIY: {
-    //     subscribe: (_, __, { pubsub }) => {
-    //       return pubsub.asyncIterator('NEW_DIY');
-    //     },
-    //   },
-    //   newComment: {
-    //     subscribe: (_, { DIYId }, { pubsub }) => {
-    //       return pubsub.asyncIterator(`NEW_COMMENT_${DIYId}`);
-    //     },
-    //   },
-    //   newLike: {
-    //     subscribe: (_, { DIYId }, { pubsub }) => {
-    //       return pubsub.asyncIterator(`NEW_LIKE_${DIYId}`);
-    //     },
-    //   },
-    //   },
+    Subscription: {
+      newDIY: {
+        subscribe: (_, __, { pubsub }) => {
+          return pubsub.asyncIterator('NEW_DIY');
+        },
+      },
+      newComment: {
+        subscribe: (_, { DIYId }, { pubsub }) => {
+          return pubsub.asyncIterator(`NEW_COMMENT_${DIYId}`);
+        },
+      },
+      newLike: {
+        subscribe: (_, { DIYId }, { pubsub }) => {
+          return pubsub.asyncIterator(`NEW_LIKE_${DIYId}`);
+        },
+      },
+      savedDIY : {
+        subscribe: (_, __, { pubsub }) => {
+          return pubsub.asyncIterator('SAVED_DIY');
+        },
+      },
+      },
 };
 
 module.exports = resolvers;

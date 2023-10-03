@@ -5,7 +5,7 @@ import Hero from './Hero';
 
 function Home() {
   return (
-    <div className="bg-black w-full overflow-hidden text-pink-100">
+    <div className="bg-black w-full overflow-hidden">
       <Hero />
       <Sliding />
     </div>
