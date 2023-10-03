@@ -30,7 +30,7 @@ const SearchBar = () => {
       <div className="w-[600px] relative">
         <div className="relative">
           <input
-            className="w-full p-4 rounded-full bg-slate-800 text-white focus:outline-none focus:ring focus:ring-pink-400"
+            className="w-full p-4 rounded-full bg-slate-800 text-white focus:outline-none focus:ring-1 focus:ring-gray-600"
             type="search"
             name="search"
             id="search"
@@ -48,7 +48,7 @@ const SearchBar = () => {
 
         {/* Display search results */}
         {searchTerm && (
-          <div className="absolute top-full left-0 right-0 bg-slate-800 bg-opacity-80 backdrop-blur-md rounded-b-lg overflow-hidden">
+          <div className="absolute top-full left-0 right-0 bg-slate-800 bg-opacity-80 backdrop-blur-md rounded-b-lg overflow-hidden z-10">
             {loading ? (
               <div className="p-4 text-gray-600">Searching...</div>
             ) : (
