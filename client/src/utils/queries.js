@@ -101,6 +101,17 @@ query GetDIY($id: ID!) {
   }
 `;
 
+export const GET_POPULAR_DIYS = gql`
+  query GetPopularDIYS {
+    popular_DIYS {
+      _id
+      title
+      description
+      images
+    }
+  }
+`;
+
 //a query to get a single user by their username
 export const GET_USER_BY_USERNAME = gql`
 query GetDIYsByUsername($username: String!) {

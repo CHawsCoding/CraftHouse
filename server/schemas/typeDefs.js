@@ -9,6 +9,7 @@ type Query {
     DIY(_id: ID!): DIY
     DIYs: [DIY]
     allDIYs: [DIY]
+    popular_DIYS: [DIY]
 
     searchDIYs(searchTerm: String): [DIY]
 
@@ -40,6 +41,7 @@ type Subscription {
     newDIY: DIY
     newComment(DIYId: ID!): Comment
     newLike(DIYId: ID!): Like
+    savedDIY(DIYId: ID!): DIY
 }
 
 type Auth {
