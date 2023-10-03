@@ -26,7 +26,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center mb-6">
       <div className="w-[600px] relative">
         <div className="relative">
           <input
