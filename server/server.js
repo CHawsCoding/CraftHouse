@@ -2,6 +2,10 @@ const dotenv = require('dotenv').config();
 const express = require('express');
 const path = require('path');
 
+//using http for websocket 
+const http = require('http');
+const { execute, subscribe } = require('graphql');
+
 const multer = require('multer');
 
 //connect to the database
@@ -14,6 +18,7 @@ const PORT = process.env.PORT || 3001;
 //import typeDefs and resolvers
 const { typeDefs, resolvers } = require('./schemas');
 const { authMiddleware } = require('./utils/auth');
+const { SubscriptionServer } = require('subscriptions-transport-ws');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ limit: '5mb' }));
@@ -38,8 +43,8 @@ app.use(upload.single('file'));
 
 //serve up static assets
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '')));
-  }
+    app.use(express.static(path.join(__dirname, '../client/build')));
+}
 
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
@@ -55,16 +60,26 @@ const server = new ApolloServer({
     },
   });
 
+  const httpServer = http.createServer(app); //httpServer 
+
   //integrate Apollo server with Express application as middleware
-  const startApolloServer = async () => {
+  async function startApolloServer() {
     await server.start();
     server.applyMiddleware({ app });
-  };
+
+    //
+  SubscriptionServer.create(
+    { schema: typeDefs, execute, subscribe },
+    { server: httpServer, path: server.graphqlPath }
+  );
+
+  console.log(`🚀 Subscriptions ready at ws://localhost:${PORT}${server.graphqlPath}`);
+  }
 
   //start the Apollo server
   startApolloServer();
 
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
     console.log(`🌍 Now listening on http://localhost:${PORT}`);
     console.log(`🚀 GraphQL Playground available at http://localhost:${PORT}${server.graphqlPath}`);
     });
