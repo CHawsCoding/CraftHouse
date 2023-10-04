@@ -3,7 +3,7 @@
 ![badge](https://img.shields.io/badge/license-MIT-brightgreen)<br>
 
 ## Description
-A full MERN stack single-page application! Project 3
+Our app provides a platform for posting and discussing different diy projects. Users will be able to post step by step instructions for different projects, interact with other people’s posts, and manage their own posts.
 ![home-page](/assets/imgs/homepage.png "Home Page")
 
 ## Table of Contents
@@ -39,8 +39,21 @@ Solomon Tegegne - https://github.com/solowon27
 Joshua Jonas - https://github.com/lilac27
 Dan White - https://github.com/dwhit570
 
-## Tests
-no tests built in
+## Technologies used
+Multer
+Websocket
+Apollo server +
+Express +
+Subscriptions-transporter-websocket
+Graphql and graphql
+Bcrypt +
+jsonWebToken
+Mongoose
+React
+Tailwind
+Jwt-decode
+React-router-dom
+
 
 ## Questions
 reach out to us directly<br>
