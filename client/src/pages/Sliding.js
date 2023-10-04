@@ -21,7 +21,6 @@ const imageUrls = [
 function Sliding() {
     return (
       <div className="container mx-auto p-4 bg-black">
-        <h1 className="text-2xl font-bold mb-4">Image Slider</h1>
         <div className="carousel-container">
           <Carousel
             showThumbs={false}

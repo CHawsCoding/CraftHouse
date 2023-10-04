@@ -183,7 +183,7 @@ function Create() {
             value={formState.description}
             onChange={handleInputChange}
             required
-            className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-pink-500"
+            className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-yellow-500"
           />
         </div>
         <div className="mb-4">
@@ -198,7 +198,7 @@ function Create() {
         value={material}
         onChange={(event) => handleMaterialChange(event, index)}
         required
-        className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-pink-500"
+        className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-yellow-500"
       />
       {index === formState.materialsUsed.length - 1 && (
         <div className="flex items-center ml-2">
@@ -233,7 +233,7 @@ function Create() {
                 value={instruction}
                 onChange={(event) => handleInstructionChange(event, index)}
                 required
-                className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-pink-500"
+                className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-yellow-500"
               />
               {index === formState.instructions.length - 1 && (
                 <div className="flex items-center ml-2">
@@ -269,14 +269,14 @@ function Create() {
             onChange={handleImageChange}
             multiple
             required
-            className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-blue-500"
+            className="text-black w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:border-yellow-500"
           />
           {/* Display selected images */}
           {formState.images.map((imageUrl, index) => (
             <img key={index} src={imageUrl} alt={`Selected Image ${index + 1}`} className="mt-2 max-h-32" />
           ))}
         </div>
-        <button type="submit" className="w-full py-2 px-4 bg-yellow-700 hover:bg-yellow-600 text-white rounded-md focus:outline-none focus:ring focus:ring-blue-200">
+        <button type="submit" className="w-full py-2 px-4 bg-yellow-700 hover:bg-yellow-600 text-white rounded-md focus:outline-none focus:ring focus:ring-yellow-500">
           Create DIY
         </button>
       </form>
