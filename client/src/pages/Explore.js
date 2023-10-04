@@ -16,8 +16,8 @@ import Comments from '../components/Comments';
 function Explore({ primaryColor }) {
   const { loading, error, data } = useQuery(GET_ALL_DIYS);
 
-  // Remove 'likes' and 'comments' state as they won't be needed
-  // const [likes, setLikes] = useState({});
+  // Remove 'likes' and 'comments' state as they won't be needed (solo)
+  //const [likes, setLikes] = useState({});
   const [comments, setComments] = useState({});
 
   //mutations for likes, comments, and savedDIYs
@@ -26,7 +26,7 @@ function Explore({ primaryColor }) {
   const [removeLikeMutation] = useMutation(REMOVE_LIKE);
   const [saveDIYMutation] = useMutation(SAVE_DIY);
 
-
+//a feedback wheather the data is loading or error
   if (loading) return <div className="text-center py-8">Loading...</div>;
   if (error) return <div className="text-center py-8">Error! {error.message}</div>;
 
