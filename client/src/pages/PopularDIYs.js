@@ -1,5 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
+import { Link } from 'react-router-dom'; // Import the Link component from react-router-dom
+
 
 import { GET_POPULAR_DIYS } from '../utils/queries';
 
@@ -21,12 +23,15 @@ function PopularDIYs() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {popularDIYs.map((popularDIY) => (
           <div key={popularDIY._id} className="bg-white rounded-lg shadow-lg p-4 m-5 ">
+
             <img
               src={popularDIY.images[0]} 
               alt={popularDIY.title}
               className="w-full h-40 object-cover mb-2"
             />
-            <h2 className="text-xl text-yellow-600 font-semibold mb-2">{popularDIY.title}</h2>
+          <Link to={`/diy/${popularDIY._id}`} className="text-xl text-yellow-600 font-semibold mb-2">
+            {popularDIY.title}
+          </Link>
             <p className="text-gray-600">{popularDIY.description}</p>
           </div>
         ))}
