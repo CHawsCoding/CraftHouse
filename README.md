@@ -82,8 +82,21 @@ This project is covered through the MIT license.
 - Joshua Jonas - https://github.com/lilac27
 - Dan White - https://github.com/dwhit570
 
-## Tests
-no tests built in
+## Technologies used
+Multer
+Websocket
+Apollo server +
+Express +
+Subscriptions-transporter-websocket
+Graphql and graphql
+Bcrypt +
+jsonWebToken
+Mongoose
+React
+Tailwind
+Jwt-decode
+React-router-dom
+
 
 ## Questions
 reach out to us directly<br>
