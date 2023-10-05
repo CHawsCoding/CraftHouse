@@ -35,7 +35,7 @@ Responsive Design: Craft House is designed to work seamlessly on various devices
 
 Installable: Craft House is a progressive web application (PWA) that can be installed on your device for easy access.
 ## Installation
-N/A
+click on the download link in the right corner of your browser address bar to download our app to your desktop.
 
 ## Usage
 1. type npm i in the CLI
@@ -67,17 +67,20 @@ https://craft-house-333df780d3f8.herokuapp.com/
 - WebSocket (subscriptions)
 - Multer (image upload)
 
+### Deployment
+- Heroku
+
 ## License
 ![badge](https://img.shields.io/badge/license-MIT-brightgreen)
 <br>
 This project is covered through the MIT license. 
 
 ## Contributing
-Brayden Day - https://github.com/braydenday
-Collin Haws - https://github.com/CHawsCoding
-Solomon Tegegne - https://github.com/solowon27
-Joshua Jonas - https://github.com/lilac27
-Dan White - https://github.com/dwhit570
+- Brayden Day - https://github.com/braydenday
+- Collin Haws - https://github.com/CHawsCoding
+- Solomon Tegegne - https://github.com/solowon27
+- Joshua Jonas - https://github.com/lilac27
+- Dan White - https://github.com/dwhit570
 
 ## Tests
 no tests built in
