@@ -1,31 +1,71 @@
 <h1 text-align="center">Craft House</h1>
-  
-![badge](https://img.shields.io/badge/license-MIT-brightgreen)<br>
-
-## Description
-Our app provides a platform for posting and discussing different diy projects. Users will be able to post step by step instructions for different projects, interact with other people’s posts, and manage their own posts.
-![home-page](/assets/imgs/homepage.png "Home Page")
 
 ## Table of Contents
 - [Description](#description)
+- [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Technologies](#technologies)
 - [License](#license)
 - [Contributing](#contributing)
 - [Tests](#tests)
 - [Questions](#questions)
 
+## Description
+A full MERN stack single-page application! Project 3
+![home-page](/assets/imgs/homepage.png "Home Page")
+Craft House is a web application that serves as a community hub for DIY (Do It Yourself) enthusiasts. Whether you're into crafting, woodworking, home improvement, or any other DIY project, Craft House provides a platform for users to discover, share, and collaborate on their creative endeavors. Users can create a profile, post their projects, and view other users' projects. Users can also comment on projects and save projects to their profile. Craft House is a full MERN stack application that utilizes React, MongoDB, Express, and Node.js. The application is deployed on Heroku and uses MongoDB Atlas for the database. The application is styled using Tailwind CSS and some custom CSS. The application is also mobile responsive.
+
+## Features
+User Registration and Authentication: Users can create accounts, log in, and enjoy a personalized experience on Craft House.
+
+Create and Share DIY Projects: Users can create detailed DIY project guides, complete with materials lists, step-by-step instructions, and images.
+
+Explore DIYs: Discover a wide range of DIY projects created by the Craft House community. Find inspiration, learn new skills, and embark on your DIY journey.
+
+Like and Comment: Interact with DIY projects by liking them and leaving comments to provide feedback or ask questions.
+
+Save Favorite DIYs: Bookmark your favorite DIY projects to easily access them later.
+
+Search Functionality: Effortlessly search for specific DIY projects using keywords, titles, or descriptions.
+
+Progress Tracking: Mark DIY projects as "in progress" or "completed" to keep track of your achievements.
+
+Responsive Design: Craft House is designed to work seamlessly on various devices, from desktop to mobile, ensuring a consistent user experience.
+
+Installable: Craft House is a progressive web application (PWA) that can be installed on your device for easy access.
 ## Installation
 N/A
 
 ## Usage
 1. type npm i in the CLI
-2. type npm run start in the CLI
+2. type npm run develop in the CLI
 
 OR
 
 Live deployed application on Heroku:
 https://craft-house-333df780d3f8.herokuapp.com/
+
+## Technologies
+
+### Front End
+- React
+- Apollo Client for GraphQL
+- Tailwind CSS
+- Custom CSS
+- React Router
+
+### Back End
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- GraphQL
+- Apollo Server
+- Bcrypt
+- JSON Web Token (JWT)
+- WebSocket (subscriptions)
+- Multer (image upload)
 
 ## License
 ![badge](https://img.shields.io/badge/license-MIT-brightgreen)
