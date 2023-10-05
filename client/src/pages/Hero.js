@@ -63,10 +63,24 @@ function Hero() {
           <p className="lg:text-3xl text-center md:text-2xl mb-4">
             Join the Community and Start sharing your creative DIY ideas today!
           </p>
+
           <p className="text-yellow-500 text-center lg:text-2xl mb-4">
            Interact with other DIYers and spread the inspiration!
           </p>
-          {/* Add more text content as needed */}
+
+           <p className="text-white text-center font-mono lg:text-4xl sm:text-2xl border border-yellow-700 rounded p-2">
+           Explore our DIYs, Save your favorite and come back to them later!
+            </p>
+
+            <div className="text-center mt-8 mb-8">
+              <Link to="/explore" className="bg-yellow-500 hover:bg-yellow-700 transition duration-300 text-white font-semibold py-2 px-4 rounded-lg mr-4">
+                Explore
+              </Link>
+              <Link to="/signup" className="bg-yellow-500 hover:bg-yellow-700 transition duration-300 text-white font-semibold py-2 px-4 rounded-lg">
+                Sign Up
+              </Link>
+            </div>
+            
         </div>
       </div>
       </section>
